@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Gluten:wght@500&display=swap');
+/* Lembrar de colocar cores em variaveis!!! */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --dark-orange: #ffbc66;
+    --medium-orange: #f9cc92;
+    --light-orange: #fbefe2;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#btnStart {
+    font-family: 'Gluten', cursive;
+    color: whitesmoke;
+    font-size: 1.2rem;
+    border-radius: 1rem;
+    border: 2px solid var(--dark-orange);
+    box-shadow: inset 0 0.5rem var(--light-orange), inset 0 -0.5rem var(--dark-orange);
+    background: var(--medium-orange);
+    padding: 1rem 3rem;
+    cursor: pointer;
+}
+
+#gameBoard {
+    background: whitesmoke;
+    width: 80vw;
+    height: 30rem;
+    border: 2px solid pink;
+}
+
