@@ -4,11 +4,14 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gluten', cursive;
 }
 
 :root {
     --dark-orange: #ffbc66;
     --medium-orange: #f9cc92;
+    --light-orange-opacity: #fbefe28e;
     --light-orange: #fbefe2;
 }
 
@@ -17,10 +20,61 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Gluten', cursive;
+    background: center / cover no-repeat url(../imgs/background.png);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes popOh {
+    0% {opacity: 0%}
+    100% {opacity: 100%}
+}
+
+@keyframes popMy {
+    0% {opacity: 0%}
+    25% {opacity: 0%}
+    50% {opacity: 0%}
+    100% {opacity: 100%}
+}
+
+@keyframes popMemory {
+    0% {opacity: 0%}
+    25% {opacity: 0%}
+    50% {opacity: 0%}
+    75% {opacity: 0%}
+    100% {opacity: 100%}
+}
+
+
+#logo {
+    text-align: center;
+    width: fit-content;
+}
+
+#oh, #my {
+    width: 8rem;
+}
+
+#oh {
+    animation: popOh 2s;
+}
+
+#my {
+    animation: popMy 2s;
+}
+
+#memory {
+    width: 15rem;
+    animation: popMemory 2s;
 }
 
 #btnStart {
-    font-family: 'Gluten', cursive;
     color: whitesmoke;
     font-size: 1.2rem;
     border-radius: 1rem;
@@ -28,13 +82,48 @@ body {
     box-shadow: inset 0 0.5rem var(--light-orange), inset 0 -0.5rem var(--dark-orange);
     background: var(--medium-orange);
     padding: 1rem 3rem;
-    cursor: pointer;
+    transform: scale(1);
 }
 
 #gameBoard {
-    background: whitesmoke;
+    background: var(--light-orange);
     width: 80vw;
     height: 30rem;
-    border: 2px solid pink;
+    border-radius: 1rem;
+    border: 2px solid var(--dark-orange);
+    padding: 1rem;
+    display: grid;
+    row-gap: 7rem;
 }
 
+#levels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-items: center;
+    row-gap: 1rem;
+}
+
+.levelBtn {
+    background: center / contain no-repeat url(../imgs/level_btn.png);
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: whitesmoke;
+}
+
+#message {
+    text-align: center;
+}
+
+@media only screen and (min-width: 1000px) {
+    #levels {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .levelBtn {
+        cursor: pointer;
+    }
+}

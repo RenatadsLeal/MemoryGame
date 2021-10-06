@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,12 +10,27 @@
 
     <title>Memory Game</title>
 </head>
+
 <body>
+    <audio autoplay>
+        <source src="./audios/game.mp3" type="./audios/game.mp3">
+        <source src="./audios/game.mp3" type="">
+        Your browser does not support the audio element.
+    </audio>
 
-    <img src="" alt="Logo" id="logo">
+    <main>
+        <div id="logo">
+            <div id="ohMy">
+                <img src="./imgs/oh.png" alt="oh" id="oh">
+                <img src="./imgs/my.png" alt="my" id="my">
+            </div>
+            <img src="./imgs/memory.png" alt="memory" id="memory">
+        </div>
 
-    <button id="btnStart">START</button>
+        <button id="btnStart">START</button>
+    </main>
 
     <script src="./js/main.js"></script>
 </body>
+
 </html>
