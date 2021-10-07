@@ -48,6 +48,7 @@ main {
     25% {opacity: 0%}
     50% {opacity: 0%}
     75% {opacity: 0%}
+    85% {opacity: 0%}
     100% {opacity: 100%}
 }
 
@@ -59,19 +60,22 @@ main {
 
 #oh, #my {
     width: 8rem;
+    /* opacity: 0; */
 }
 
 #oh {
-    animation: popOh 2s;
+    /* animation-delay: 5s; */
+    /* animation: 1s 5s popOh; */
 }
 
 #my {
-    animation: popMy 2s;
+    /* animation: 1s 7s popMy; */
 }
 
 #memory {
     width: 15rem;
-    animation: popMemory 2s;
+    /* opacity: 0; */
+    /* animation: popMemory 1s; */
 }
 
 #btnStart {
@@ -85,15 +89,29 @@ main {
     transform: scale(1);
 }
 
-#gameBoard {
+#initialBoard {
     background: var(--light-orange);
-    width: 80vw;
-    height: 30rem;
+    width: 90vw;
+    max-height: 90vh;
     border-radius: 1rem;
     border: 2px solid var(--dark-orange);
     padding: 1rem;
     display: grid;
     row-gap: 7rem;
+}
+
+.gameBoard {
+    background: var(--light-orange);
+    width: 90vw;
+    max-height: 90vh;
+    border-radius: 1rem;
+    border: 2px solid var(--dark-orange);
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.5rem;
+    column-gap: 0.5rem;
 }
 
 #levels {
@@ -117,6 +135,20 @@ main {
 
 #message {
     text-align: center;
+}
+
+.card {
+    border-radius: 1rem;
+    border: 1px solid ;
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card img {
+    width: 3rem;
 }
 
 @media only screen and (min-width: 1000px) {
