@@ -53,12 +53,12 @@ let openBoard = () => {
     initialBoard.appendChild(message);
 }
 
-const cards = ["https://cdn-icons-png.flaticon.com/512/826/826985.png",
-"../imgs/avocado.png",
-"https://cdn-icons-png.flaticon.com/512/5520/5520474.png",
-"https://cdn-icons-png.flaticon.com/512/5520/5520577.png",
-"https://cdn-icons-png.flaticon.com/512/5520/5520683.png",
-"https://cdn-icons-png.flaticon.com/512/5520/5520649.png"];
+const cards = ["./imgs/banana.png",
+"./imgs/avocado.png",
+"./imgs/cherry.png",
+"./imgs/strawberry.png",
+"./imgs/watermellon.png",
+"./imgs/orange.png"];
 
 let duplicateCards = number => {
     let selectedCards = cards.slice(0, number);
