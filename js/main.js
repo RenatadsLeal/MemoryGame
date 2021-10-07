@@ -89,6 +89,9 @@ let createCard = element => {
 }
 
 let cardsCreated = [];
+let firstSelectedCard;
+let secondSelectedCard;
+let count = 0;
 
 let openLevel1 = () => {
     initialBoard.style.display = "none";
@@ -101,40 +104,35 @@ let openLevel1 = () => {
     
     shuffle(doubledCards);
 
+    let cards = [];
+
     for (let element of doubledCards) {
         let card = createCard(element);
         gameBoard.appendChild(card);
-        card.onclick = () => {
-            selectedCard = card;
-            console.log(selectedCard);
-        }
-        card.onclick = () => {
-            if(card == selectedCard) {
-                console.log(card);
-                card.remove();
-            }
-        }
+        cards.push(card);
     }
 
-    cardsCreated = document.querySelectorAll(".card");
-    console.log(cardsCreated);
-
-    let selectedCard;
-    // let cardsCreated = document.querySelectorAll(".card");
-
-    cardsCreated.forEach(card => {
+    cards.forEach(card => {
         card.onclick = () => {
-            selectedCard = card;
-            console.log(selectedCard);
-        }
-        card.onclick = () => {
-            if(card == selectedCard) {
-                console.log(card);
-                card.remove();
+            count++;
+            if(count == 1) {
+                firstSelectedCard = card;
+            }
+            if(count == 2) {
+                secondSelectedCard = card;
+
+                if(firstSelectedCard.innerHTML == secondSelectedCard.innerHTML) {
+                    firstSelectedCard.remove();
+                    secondSelectedCard.remove();
+                    count = 0;
+                } else {
+                    count = 0;
+                }
             }
         }
     })
 }
 
-
-    
+// fazer cartas virarem
+// olhinho piscar
+// cartas pulando no fim
