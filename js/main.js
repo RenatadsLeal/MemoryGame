@@ -128,11 +128,13 @@ let openLevel1 = () => {
     }
 
     cards.forEach(card => {
-        card.onclick = () => {
+        card.onclick = function myFunc() {
+            //poe
             card.style.transform = "rotateY(180deg)";
             count++;
             if(count == 1) {
                 firstSelectedCard = card;
+                cards.pointerEvents = "none";
             }
             if(count == 2) {
                 secondSelectedCard = card;
@@ -141,19 +143,19 @@ let openLevel1 = () => {
                     // firstSelectedCard.remove();
                     // secondSelectedCard.remove();
                     count = 0;
-                    window.navigator.vibrate(200);
+                    setTimeout(function() {window.navigator.vibrate(200);}, 500);
                 } else {
+                    //tira
                     setTimeout(function() {firstSelectedCard.style.transform = "";}, 1000);
                     setTimeout(function() {secondSelectedCard.style.transform = "";}, 1000);
                     // virar pra baixo
-                    count = 0;
+                    count = 0; 
                 }
                 // firstSelectedCard.style.transform = "";
                 // secondSelectedCard.style.transform = "";
             }  
         }
     })
-    console.log(cards);
 }
 
 // fazer cartas virarem
