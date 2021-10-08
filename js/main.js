@@ -31,11 +31,11 @@ let openBoard = () => {
 
     let level1 = createLevels("level1", 1);
     levels.appendChild(level1);
-    level1.addEventListener("click", () => openLevel(6));
+    level1.addEventListener("click", () => openLevel(1, 6));
     
     let level2 = createLevels("level2", 2);
     levels.appendChild(level2);
-    level2.addEventListener("click", () => openLevel(10));
+    level2.addEventListener("click", () => openLevel(2, 10));
 
     let level3 = createLevels("level3", 3);
     levels.appendChild(level3);
@@ -108,16 +108,16 @@ let createCard = element => {
 let firstSelectedCard;
 let secondSelectedCard;
 let count = 0;
-let alow = true;
+let allow = true;
 
-let openLevel = (numberCards) => {
+let openLevel = (level, numberOfCards) => {
     initialBoard.style.display = "none";
 
-    let gameBoard = createDiv("boardLevel1");
+    let gameBoard = createDiv(`boardLevel${level}`);
     gameBoard.setAttribute("class", "gameBoard");
     main.appendChild(gameBoard);
 
-    let doubledCards = duplicateCards(numberCards);
+    let doubledCards = duplicateCards(numberOfCards);
     
     shuffle(doubledCards);
 
@@ -135,11 +135,14 @@ let openLevel = (numberCards) => {
 
     cards.forEach(card => {
         card.addEventListener("click", () => {
-            if (alow == true) {
+            if (allow == true) {
             card.style.transform = "rotateY(180deg)";
             count++;
             if(count == 1) {
                 firstSelectedCard = card;
+            }
+            if(cards.indexOf(firstSelectedCard) == cards.indexOf(card)) {
+                count = 1;
             }
             if(count == 2) {
                 secondSelectedCard = card;
@@ -150,9 +153,9 @@ let openLevel = (numberCards) => {
                     count = 0;
                     setTimeout(function() {window.navigator.vibrate(200);}, 500);
                 } else {
-                    alow = false;
+                    allow = false;
                     setTimeout(function() {firstSelectedCard.style.transform = "";}, 1000);
-                    setTimeout(function() {secondSelectedCard.style.transform = ""; alow = true;}, 1000);
+                    setTimeout(function() {secondSelectedCard.style.transform = ""; allow = true;}, 1000);
                     count = 0;
                 }
             }
