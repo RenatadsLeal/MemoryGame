@@ -2,12 +2,12 @@ let logo = document.querySelector("#logo");
 let btnStart = document.querySelector("#btnStart");
 let main = document.querySelector("main");
 
-btnStart.onclick = function() {
+btnStart.addEventListener("click", () => {
     logo.style.display = "none";
     btnStart.style.display = "none";
 
     openBoard();
-}
+})
 
 let createDiv = (id) =>  {
     let levelDiv = document.createElement("div");
@@ -31,10 +31,11 @@ let openBoard = () => {
 
     let level1 = createLevels("level1", 1);
     levels.appendChild(level1);
-    level1.onclick = () => openLevel1();
+    level1.addEventListener("click", () => openLevel(6));
     
     let level2 = createLevels("level2", 2);
     levels.appendChild(level2);
+    level2.addEventListener("click", () => openLevel(10));
 
     let level3 = createLevels("level3", 3);
     levels.appendChild(level3);
@@ -58,7 +59,11 @@ const cards = ["./imgs/banana.png",
 "./imgs/cherry.png",
 "./imgs/strawberry.png",
 "./imgs/watermelon.png",
-"./imgs/orange.png"];
+"./imgs/orange.png",
+"./imgs/oh.png",
+"./imgs/my.png",
+"./imgs/memory.png",
+"./imgs/background.png"];
 
 let duplicateCards = number => {
     let selectedCards = cards.slice(0, number);
@@ -103,15 +108,16 @@ let createCard = element => {
 let firstSelectedCard;
 let secondSelectedCard;
 let count = 0;
+let alow = true;
 
-let openLevel1 = () => {
+let openLevel = (numberCards) => {
     initialBoard.style.display = "none";
 
     let gameBoard = createDiv("boardLevel1");
     gameBoard.setAttribute("class", "gameBoard");
     main.appendChild(gameBoard);
 
-    let doubledCards = duplicateCards(6);
+    let doubledCards = duplicateCards(numberCards);
     
     shuffle(doubledCards);
 
@@ -128,13 +134,12 @@ let openLevel1 = () => {
     }
 
     cards.forEach(card => {
-        card.onclick = function myFunc() {
-            //poe
+        card.addEventListener("click", () => {
+            if (alow == true) {
             card.style.transform = "rotateY(180deg)";
             count++;
             if(count == 1) {
                 firstSelectedCard = card;
-                cards.pointerEvents = "none";
             }
             if(count == 2) {
                 secondSelectedCard = card;
@@ -145,19 +150,17 @@ let openLevel1 = () => {
                     count = 0;
                     setTimeout(function() {window.navigator.vibrate(200);}, 500);
                 } else {
-                    //tira
+                    alow = false;
                     setTimeout(function() {firstSelectedCard.style.transform = "";}, 1000);
-                    setTimeout(function() {secondSelectedCard.style.transform = "";}, 1000);
-                    // virar pra baixo
-                    count = 0; 
+                    setTimeout(function() {secondSelectedCard.style.transform = ""; alow = true;}, 1000);
+                    count = 0;
                 }
-                // firstSelectedCard.style.transform = "";
-                // secondSelectedCard.style.transform = "";
-            }  
+            }
         }
+        })
     })
 }
 
-// fazer cartas virarem
+// tempo do jogo
 // olhinho piscar
 // cartas pulando no fim
