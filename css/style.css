@@ -73,6 +73,12 @@ main {
 }
 
 #memory {
+    margin-top: -2rem;
+    /* margin-top: 1.5rem;
+    margin-bottom: -6.5rem; */
+}
+
+#memory img{
     width: 15rem;
     /* opacity: 0; */
     /* animation: popMemory 1s; */
@@ -145,6 +151,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: whitesmoke;
 }
 
 .card img {

@@ -57,7 +57,7 @@ const cards = ["./imgs/banana.png",
 "./imgs/avocado.png",
 "./imgs/cherry.png",
 "./imgs/strawberry.png",
-"./imgs/watermellon.png",
+"./imgs/watermelon.png",
 "./imgs/orange.png"];
 
 let duplicateCards = number => {
@@ -67,7 +67,8 @@ let duplicateCards = number => {
 }
 
 let shuffle = array => {
-    let currentIndex = array.length, randomIndex;
+    let currentIndex = array.length;
+    let randomIndex;
 
     while(currentIndex != 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -83,12 +84,10 @@ let createCard = element => {
     card.setAttribute("class", `card card${index}`);
     let image = document.createElement("img");
     image.setAttribute("src", element);
-    
     card.appendChild(image);
     return card;
 }
 
-let cardsCreated = [];
 let firstSelectedCard;
 let secondSelectedCard;
 let count = 0;
@@ -114,6 +113,7 @@ let openLevel1 = () => {
 
     cards.forEach(card => {
         card.onclick = () => {
+            card.style.transform = "rotateY(360deg)";
             count++;
             if(count == 1) {
                 firstSelectedCard = card;
@@ -125,6 +125,7 @@ let openLevel1 = () => {
                     firstSelectedCard.remove();
                     secondSelectedCard.remove();
                     count = 0;
+                    window.navigator.vibrate(200);
                 } else {
                     count = 0;
                 }
