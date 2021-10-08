@@ -143,18 +143,38 @@ main {
     text-align: center;
 }
 
-.card {
+.flipContainer {
+    width: 5.5rem;
+    height: 5.5rem;
+    perspective: 12rem;
+}
+
+.flipper {
+    position: relative;
+    width: 100%;
+	height: 100%;
+    transition: transform 0.8s;
+	transform-style: preserve-3d;
+}
+
+.cardFront, .cardBack {
+    position: absolute;
     border-radius: 1rem;
     border: 1px solid ;
-    width: 5rem;
-    height: 5rem;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background: whitesmoke;
+    backface-visibility: hidden;
 }
 
-.card img {
+.cardFront {
+    transform: rotateY(180deg);
+}
+
+.cardFront img {
     width: 3rem;
 }
 

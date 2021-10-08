@@ -79,13 +79,25 @@ let shuffle = array => {
 }
 
 let createCard = element => {
-    let index = cards.indexOf(element);
-    let card = document.createElement("div");
-    card.setAttribute("class", `card card${index}`);
+    // let flipContainer = document.createElement("div");
+    // flipContainer.setAttribute("class", "flipContainer");
+
+    let flipper = document.createElement("div");
+    flipper.setAttribute("class", "flipper");
+    // flipContainer.appendChild(flipper);
+
+    let cardFront = document.createElement("div");
+    cardFront.setAttribute("class", "cardFront");
+    flipper.appendChild(cardFront);
+
+    let cardBack = document.createElement("div");
+    cardBack.setAttribute("class", "cardBack");
+    flipper.appendChild(cardBack);
+
     let image = document.createElement("img");
     image.setAttribute("src", element);
-    card.appendChild(image);
-    return card;
+    cardFront.appendChild(image);
+    return flipper;
 }
 
 let firstSelectedCard;
@@ -106,14 +118,18 @@ let openLevel1 = () => {
     let cards = [];
 
     for (let element of doubledCards) {
-        let card = createCard(element);
-        gameBoard.appendChild(card);
-        cards.push(card);
+        let flipContainer = document.createElement("div");
+        flipContainer.setAttribute("class", "flipContainer");
+
+        let flipper = createCard(element);
+        flipContainer.appendChild(flipper);
+        gameBoard.appendChild(flipContainer);
+        cards.push(flipper);
     }
 
     cards.forEach(card => {
         card.onclick = () => {
-            card.style.transform = "rotateY(360deg)";
+            card.style.transform = "rotateY(180deg)";
             count++;
             if(count == 1) {
                 firstSelectedCard = card;
@@ -122,16 +138,22 @@ let openLevel1 = () => {
                 secondSelectedCard = card;
 
                 if(firstSelectedCard.innerHTML == secondSelectedCard.innerHTML) {
-                    firstSelectedCard.remove();
-                    secondSelectedCard.remove();
+                    // firstSelectedCard.remove();
+                    // secondSelectedCard.remove();
                     count = 0;
                     window.navigator.vibrate(200);
                 } else {
+                    setTimeout(function() {firstSelectedCard.style.transform = "";}, 1000);
+                    setTimeout(function() {secondSelectedCard.style.transform = "";}, 1000);
+                    // virar pra baixo
                     count = 0;
                 }
-            }
+                // firstSelectedCard.style.transform = "";
+                // secondSelectedCard.style.transform = "";
+            }  
         }
     })
+    console.log(cards);
 }
 
 // fazer cartas virarem
