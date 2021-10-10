@@ -2,6 +2,7 @@ let logo = document.querySelector("#logo");
 let btnStart = document.querySelector("#btnStart");
 let main = document.querySelector("main");
 
+
 btnStart.addEventListener("click", () => {
     logo.style.display = "none";
     btnStart.style.display = "none";
@@ -31,7 +32,7 @@ let openBoard = () => {
 
     let level1 = createLevels("level1", 1);
     levels.appendChild(level1);
-    level1.addEventListener("click", () => openLevel(1, 6));
+    level1.addEventListener("click", () => openLevel(1, 6, 0, 15));
     
     let level2 = createLevels("level2", 2);
     levels.appendChild(level2);
@@ -105,13 +106,42 @@ let createCard = element => {
     return flipper;
 }
 
+let countdown;
+let timer;
+let minutesLeft;
+let secondsLeft;
+
+let updateTimer = () => {
+    secondsLeft--;
+    
+    if(secondsLeft == 0 && minutesLeft > 0) {
+        minutesLeft--;
+        secondsLeft = 60;
+    } else if(secondsLeft == 0 && minutesLeft == 0){
+        clearInterval(timer);
+    }
+    countdown.innerHTML = minutesLeft + ":" + (("0" + secondsLeft).slice(-2));
+}
+
+let startTimer = () => {
+    timer = setInterval(updateTimer, 1000);
+    updateTimer();
+}
+
 let firstSelectedCard;
 let secondSelectedCard;
 let count = 0;
 let allow = true;
 
-let openLevel = (level, numberOfCards) => {
+let openLevel = (level, numberOfCards, minutes, seconds) => {
+    secondsLeft = seconds;
+    minutesLeft = minutes;
     initialBoard.style.display = "none";
+
+    countdown = createDiv("countdown");
+    main.appendChild(countdown);
+
+    startTimer();
 
     let gameBoard = createDiv(`boardLevel${level}`);
     gameBoard.setAttribute("class", "gameBoard");
