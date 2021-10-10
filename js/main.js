@@ -60,10 +60,10 @@ const cards = ["./imgs/banana.png",
 "./imgs/strawberry.png",
 "./imgs/watermelon.png",
 "./imgs/orange.png",
-"./imgs/oh.png",
-"./imgs/my.png",
-"./imgs/memory.png",
-"./imgs/background.png"];
+"./imgs/broccoli.png",
+"./imgs/carrot.png",
+"./imgs/radish.png",
+"./imgs/tomato.png"];
 
 let duplicateCards = number => {
     let selectedCards = cards.slice(0, number);
@@ -151,7 +151,9 @@ let openLevel = (level, numberOfCards) => {
                     // firstSelectedCard.remove();
                     // secondSelectedCard.remove();
                     count = 0;
-                    setTimeout(function() {window.navigator.vibrate(200);}, 500);
+                    if(window.navigator && window.navigator.vibrate){
+                        setTimeout(function() {window.navigator.vibrate(200);}, 500);
+                    }
                 } else {
                     allow = false;
                     setTimeout(function() {firstSelectedCard.style.transform = "";}, 1000);
