@@ -202,7 +202,14 @@ main {
     background: center / contain no-repeat url(../imgs/cardBack.png);
 }
 
-
+#gameOver {
+    width: 100%;
+    height: 100%;
+    background: center / contain no-repeat url(../imgs/gameOver.png) var(--light-orange-opacity);
+    position: absolute;
+    z-index: 1;
+    padding: 1rem;
+}
 
 @media only screen and (min-width: 1000px) {
     #levels {
