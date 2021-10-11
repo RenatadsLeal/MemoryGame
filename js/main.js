@@ -2,10 +2,13 @@ let logo = document.querySelector("#logo");
 let btnStart = document.querySelector("#btnStart");
 let main = document.querySelector("main");
 
-
 btnStart.addEventListener("click", () => {
-    logo.style.display = "none";
-    btnStart.style.display = "none";
+    while(main.firstChild) {
+        main.removeChild(main.firstChild);
+    }
+    
+    // logo.style.display = "none";
+    // btnStart.style.display = "none";
 
     openBoard();
 })
@@ -23,6 +26,48 @@ let createLevels = (id, number) => {
     return level;
 }
 
+let objectLevel1 = {
+    level: 1,
+    numberOfCards: 6,
+    minutes: 0,
+    seconds: 3,
+};
+
+let objectLevel2 = {
+    level: 2,
+    numberOfCards: 10,
+    minutes: 0,
+    seconds: 5,
+};
+
+let objectLevel3 = {
+    level: 3,
+    numberOfCards: 14,
+    minutes: 0,
+    seconds: 3
+};
+
+let objectLevel4 = {
+    level: 4,
+    numberOfCards: 18,
+    minutes: 0,
+    seconds: 3,
+};
+
+let objectLevel5 = {
+    level: 5,
+    numberOfCards: 22,
+    minutes: 0,
+    seconds: 3,
+};
+
+let objectLevel6 = {
+    level: 6,
+    numberOfCards: 26,
+    minutes: 0,
+    seconds: 3,
+};
+
 let openBoard = () => {
     let initialBoard = createDiv("initialBoard");
     main.appendChild(initialBoard);
@@ -32,23 +77,27 @@ let openBoard = () => {
 
     let level1 = createLevels("level1", 1);
     levels.appendChild(level1);
-    level1.addEventListener("click", () => openLevel(1, 6, 0, 15));
+    level1.addEventListener("click", () => openLevel(objectLevel1));
     
     let level2 = createLevels("level2", 2);
     levels.appendChild(level2);
-    level2.addEventListener("click", () => openLevel(2, 10));
+    level2.addEventListener("click", () => openLevel(objectLevel2));
 
     let level3 = createLevels("level3", 3);
     levels.appendChild(level3);
+    level3.addEventListener("click", () => openLevel(objectLevel3));
     
     let level4 = createLevels("level4", 4);
     levels.appendChild(level4);
+    level4.addEventListener("click", () => openLevel(objectLevel4));
 
     let level5 = createLevels("level5", 5);
     levels.appendChild(level5);
+    level5.addEventListener("click", () => openLevel(objectLevel5));
     
     let level6 = createLevels("level6", 6);
     levels.appendChild(level6);
+    level6.addEventListener("click", () => openLevel(objectLevel6));
 
     let message = createDiv("message");
     message.innerHTML = "Complete levels to unlock new ones";
@@ -108,17 +157,20 @@ let createCard = element => {
 
 let countdown;
 let timer;
+
+let currentLevel;
 let minutesLeft;
 let secondsLeft;
 
 let updateTimer = () => {
-    secondsLeft--;
-    
     if(secondsLeft == 0 && minutesLeft > 0) {
         minutesLeft--;
-        secondsLeft = 60;
+        secondsLeft = 59;
     } else if(secondsLeft == 0 && minutesLeft == 0){
         clearInterval(timer);
+        gameOver();
+    } else{
+        secondsLeft--;
     }
     countdown.innerHTML = minutesLeft + ":" + (("0" + secondsLeft).slice(-2));
 }
@@ -128,26 +180,53 @@ let startTimer = () => {
     updateTimer();
 }
 
+let gameOver = () => {
+    let gameOver = createDiv("gameOver");
+    main.appendChild(gameOver);
+
+    let btnLevelsMenu = document.createElement("button");
+    btnLevelsMenu.setAttribute("id", "btnLevelsMenu");
+    btnLevelsMenu.innerHTML = "Back to menu";
+    gameOver.appendChild(btnLevelsMenu);
+
+    let btnTryAgain = document.createElement("button");
+    btnTryAgain.setAttribute("id", "btnTryAgain");
+    btnTryAgain.innerHTML = "Try again";
+    gameOver.appendChild(btnTryAgain);
+
+    btnTryAgain.addEventListener("click", () => {
+        while(main.firstChild) {
+            main.removeChild(main.firstChild);
+        }
+
+        openLevel(currentLevel);
+    })
+}
+
 let firstSelectedCard;
 let secondSelectedCard;
 let count = 0;
 let allow = true;
 
-let openLevel = (level, numberOfCards, minutes, seconds) => {
-    secondsLeft = seconds;
-    minutesLeft = minutes;
-    initialBoard.style.display = "none";
+let openLevel = (object) => {
+    currentLevel = object;
+    minutesLeft = object.minutes;
+    secondsLeft = object.seconds;
+    
+    while(main.firstChild) {
+        main.removeChild(main.firstChild);
+    }
 
     countdown = createDiv("countdown");
     main.appendChild(countdown);
 
     startTimer();
 
-    let gameBoard = createDiv(`boardLevel${level}`);
+    let gameBoard = createDiv(`boardLevel${object.level}`);
     gameBoard.setAttribute("class", "gameBoard");
     main.appendChild(gameBoard);
 
-    let doubledCards = duplicateCards(numberOfCards);
+    let doubledCards = duplicateCards(object.numberOfCards);
     
     shuffle(doubledCards);
 
@@ -178,8 +257,6 @@ let openLevel = (level, numberOfCards, minutes, seconds) => {
                 secondSelectedCard = card;
 
                 if(firstSelectedCard.innerHTML == secondSelectedCard.innerHTML) {
-                    // firstSelectedCard.remove();
-                    // secondSelectedCard.remove();
                     count = 0;
                     if(window.navigator && window.navigator.vibrate){
                         setTimeout(function() {window.navigator.vibrate(200);}, 500);
@@ -196,6 +273,10 @@ let openLevel = (level, numberOfCards, minutes, seconds) => {
     })
 }
 
-// tempo do jogo
+
+// fazer divona com game over
+// fazer o btnLevelsMenu funcionar
+// armazenar score
+// corrigir musica
 // olhinho piscar
-// cartas pulando no fim
+// cartas pulando no fim (maozinhas)

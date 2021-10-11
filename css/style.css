@@ -202,6 +202,8 @@ main {
     background: center / contain no-repeat url(../imgs/cardBack.png);
 }
 
+
+
 @media only screen and (min-width: 1000px) {
     #levels {
         grid-template-columns: repeat(3, 1fr);
