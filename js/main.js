@@ -3,6 +3,7 @@ let btnStart = document.querySelector("#btnStart");
 let main = document.querySelector("main");
 let body = document.body;
 
+let clickSound = new Audio("./audios/click.mp3");
 
 btnStart.addEventListener("click", () => {
     while (main.firstChild) {
@@ -11,35 +12,37 @@ btnStart.addEventListener("click", () => {
 
     // logo.style.display = "none";
     // btnStart.style.display = "none";
-
+    clickSound.play();
     openBoard();
 })
 
-let createDiv = (id) => {
+let createDivId = (id, parent) => {
     let levelDiv = document.createElement("div");
     levelDiv.setAttribute("id", id);
+    parent.appendChild(levelDiv);
     return levelDiv;
 }
 
-let createLevels = (id, number) => {
-    let level = createDiv(id);
-    level.setAttribute("class", "levelBtn");
-    level.innerText = number;
-    return level;
+let createDivClass = (divClass, parent) => {
+    let levelDiv = document.createElement("div");
+    levelDiv.setAttribute("class", divClass);
+    parent.appendChild(levelDiv);
+    return levelDiv;
 }
 
-let createButton = (id, text) => {
+let createButton = (id, text, parent) => {
     let btn = document.createElement("button");
     btn.setAttribute("id", id);
     btn.innerText = text;
+    parent.appendChild(btn);
     return btn;
 }
 
 let objectLevel1 = {
     level: 1,
     numberOfCards: 6,
-    minutes: 0,
-    seconds: 5,
+    minutes: 1,
+    seconds: 0,
 };
 
 let objectLevel2 = {
@@ -77,40 +80,28 @@ let objectLevel6 = {
     seconds: 3,
 };
 
+let createLevels = (id, number, objectLevel, parent) => {
+    let level = createDivId(id, parent);
+    level.setAttribute("class", "levelBtn");
+    level.innerText = number;
+    level.addEventListener("click", () => openLevel(objectLevel));
+    return level;
+}
+
 let openBoard = () => {
-    let initialBoard = createDiv("initialBoard");
-    main.appendChild(initialBoard);
+    let initialBoard = createDivId("initialBoard", main);
 
-    let levels = createDiv("levels");
-    initialBoard.appendChild(levels);
+    let levels = createDivId("levels", initialBoard);
 
-    let level1 = createLevels("level1", 1);
-    levels.appendChild(level1);
-    level1.addEventListener("click", () => openLevel(objectLevel1));
+    let level1 = createLevels("level1", 1, objectLevel1, levels);
+    let level2 = createLevels("level2", 2, objectLevel2, levels);
+    let level3 = createLevels("level3", 3, objectLevel3, levels);
+    let level4 = createLevels("level4", 4, objectLevel4, levels);
+    let level5 = createLevels("level5", 5, objectLevel5, levels);
+    let level6 = createLevels("level6", 6, objectLevel6, levels);
 
-    let level2 = createLevels("level2", 2);
-    levels.appendChild(level2);
-    level2.addEventListener("click", () => openLevel(objectLevel2));
-
-    let level3 = createLevels("level3", 3);
-    levels.appendChild(level3);
-    level3.addEventListener("click", () => openLevel(objectLevel3));
-
-    let level4 = createLevels("level4", 4);
-    levels.appendChild(level4);
-    level4.addEventListener("click", () => openLevel(objectLevel4));
-
-    let level5 = createLevels("level5", 5);
-    levels.appendChild(level5);
-    level5.addEventListener("click", () => openLevel(objectLevel5));
-
-    let level6 = createLevels("level6", 6);
-    levels.appendChild(level6);
-    level6.addEventListener("click", () => openLevel(objectLevel6));
-
-    let message = createDiv("message");
+    let message = createDivId("message", initialBoard);
     message.innerHTML = "Complete levels to unlock new ones";
-    initialBoard.appendChild(message);
 }
 
 const cards = ["./imgs/banana.png",
@@ -150,14 +141,9 @@ let createCard = element => {
     flipper.setAttribute("class", "flipper faceDown");
     // flipContainer.appendChild(flipper);
 
-    let cardFront = document.createElement("div");
-    cardFront.setAttribute("class", "cardFront");
-    flipper.appendChild(cardFront);
-
-    let cardBack = document.createElement("div");
-    cardBack.setAttribute("class", "cardBack");
-    flipper.appendChild(cardBack);
-
+    let cardFront = createDivClass("cardFront", flipper);
+    let cardBack = createDivClass("cardBack", flipper);
+ 
     let image = document.createElement("img");
     image.setAttribute("src", element);
     cardFront.appendChild(image);
@@ -189,16 +175,15 @@ let startTimer = () => {
     updateTimer();
 }
 
+let gameOverSound = new Audio("./audios/gameOver.mp3");
+
 let gameOver = () => {
     gameMusic.pause();
-    let gameOver = createDiv("gameOver");
-    main.appendChild(gameOver);
+    gameOverSound.play();
+    let gameOver = createDivId("gameOver", main);
 
-    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu");
-    gameOver.appendChild(btnLevelsMenu);
-
-    let btnTryAgain = createButton("btnTryAgain", "Try again");
-    gameOver.appendChild(btnTryAgain);
+    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", gameOver);
+    let btnTryAgain = createButton("btnTryAgain", "Try again", gameOver);
 
     btnTryAgain.addEventListener("click", () => {
         while (main.firstChild) {
@@ -207,35 +192,44 @@ let gameOver = () => {
 
         openLevel(currentLevel);
     })
+
+    btnLevelsMenu.addEventListener("click", () => {
+        while (main.firstChild) {
+            main.removeChild(main.firstChild);
+        }
+
+        openBoard();
+    })
 }
 
 let firstSelectedCard;
 let secondSelectedCard;
 let count = 0;
 let allow = true;
+let matchingCards = 0;
 
-let gameMusic = new Audio("./audios/game.mp3");
-let musicPlaying = true;
+let gameMusic = new Audio("./audios/game.wav");
+let soundOn = true;
 let playMusic = () => {
     gameMusic.play();
     gameMusic.loop = true;
-    musicPlaying = true;
+    soundOn = true;
 }
 let pauseMusic = () => {
     gameMusic.pause();
-    musicPlaying = false;
+    soundOn = false;
 }
 
 let playPauseMusic = () => {
-    if (musicPlaying) {
+    if (soundOn) {
         pauseMusic();
     } else {
         playMusic();
     }
 }
 
-let verify = () => {
-    if (musicPlaying) {
+let verifySoundPreference = () => {
+    if (soundOn) {
         playMusic();
     } else {
         pauseMusic();
@@ -247,9 +241,8 @@ let openLevel = (object) => {
         main.removeChild(main.firstChild);
     }
 
-    verify();
-    let btnMusic = createButton("btnMusic", "play/pause");
-    main.appendChild(btnMusic);
+    verifySoundPreference();
+    let btnMusic = createButton("btnMusic", "play/pause", main);
     btnMusic.addEventListener("click", () => {
         playPauseMusic();
     })
@@ -258,14 +251,12 @@ let openLevel = (object) => {
     minutesLeft = object.minutes;
     secondsLeft = object.seconds;
 
-    countdown = createDiv("countdown");
-    main.appendChild(countdown);
+    countdown = createDivId("countdown", main);
 
     startTimer();
 
-    let gameBoard = createDiv(`boardLevel${object.level}`);
+    let gameBoard = createDivId(`boardLevel${object.level}`, main);
     gameBoard.setAttribute("class", "gameBoard");
-    main.appendChild(gameBoard);
 
     let doubledCards = duplicateCards(object.numberOfCards);
 
@@ -299,10 +290,14 @@ let openLevel = (object) => {
 
                     if (firstSelectedCard.innerHTML == secondSelectedCard.innerHTML) {
                         count = 0;
+                        matchingCards++;
                         firstSelectedCard.classList.remove("faceDown");
                         secondSelectedCard.classList.remove("faceDown");
                         if (window.navigator && window.navigator.vibrate) {
                             setTimeout(function () { window.navigator.vibrate(200); }, 500);
+                        }
+                        if(matchingCards == object.numberOfCards) {
+                            clearInterval(timer);
                         }
                     } else {
                         allow = false;
@@ -312,12 +307,15 @@ let openLevel = (object) => {
                     }
                 }
             }
+
         })
     })
 }
 
-
-// fazer o btnLevelsMenu funcionar
 // armazenar score
-// olhinho piscar
+// bordinha da carta
+// mexer cor botao start
+// botao play/pause
+// alinhar coisas
 // cartas pulando no fim (maozinhas)
+// olhinho piscar
