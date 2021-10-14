@@ -13,7 +13,7 @@ btnStart.addEventListener("click", () => {
     // logo.style.display = "none";
     // btnStart.style.display = "none";
     clickSound.play();
-    openBoard();
+    openMenu();
 })
 
 let createDivId = (id, parent) => {
@@ -38,69 +38,90 @@ let createButton = (id, text, parent) => {
     return btn;
 }
 
-let objectLevel1 = {
-    level: 1,
-    numberOfCards: 6,
-    minutes: 1,
-    seconds: 0,
+function Level(level, numberOfCards, minutes, seconds){
+    this.level = level;
+    this.numberOfCards = numberOfCards;
+    this.minutes = minutes;
+    this.seconds = seconds;
 };
 
-let objectLevel2 = {
-    level: 2,
-    numberOfCards: 10,
-    minutes: 0,
-    seconds: 5,
-};
+let levels = [
+    new Level(1, 6, 1, 0),
+    new Level(2, 10, 0, 5),
+    new Level(3, 14, 1, 0),
+    new Level(4, 18, 1, 0),
+    new Level(5, 22, 1, 0),
+    new Level(6, 26, 1, 0)
+]
 
-let objectLevel3 = {
-    level: 3,
-    numberOfCards: 14,
-    minutes: 0,
-    seconds: 3
-};
+// let objectLevel1 = {
+//     level: 1,
+//     numberOfCards: 6,
+//     minutes: 1,
+//     seconds: 0,
+// };
 
-let objectLevel4 = {
-    level: 4,
-    numberOfCards: 18,
-    minutes: 0,
-    seconds: 3,
-};
+// let objectLevel2 = {
+//     level: 2,
+//     numberOfCards: 10,
+//     minutes: 0,
+//     seconds: 5,
+// };
 
-let objectLevel5 = {
-    level: 5,
-    numberOfCards: 22,
-    minutes: 0,
-    seconds: 3,
-};
+// let objectLevel3 = {
+//     level: 3,
+//     numberOfCards: 14,
+//     minutes: 0,
+//     seconds: 3
+// };
 
-let objectLevel6 = {
-    level: 6,
-    numberOfCards: 26,
-    minutes: 0,
-    seconds: 3,
-};
+// let objectLevel4 = {
+//     level: 4,
+//     numberOfCards: 18,
+//     minutes: 0,
+//     seconds: 3,
+// };
 
-let createLevels = (id, number, objectLevel, parent) => {
-    let level = createDivId(id, parent);
-    level.setAttribute("class", "levelBtn");
-    level.innerText = number;
-    level.addEventListener("click", () => openLevel(objectLevel));
-    return level;
+// let objectLevel5 = {
+//     level: 5,
+//     numberOfCards: 22,
+//     minutes: 0,
+//     seconds: 3,
+// };
+
+// let objectLevel6 = {
+//     level: 6,
+//     numberOfCards: 26,
+//     minutes: 0,
+//     seconds: 3,
+// };
+
+let createLevels = (object, parent) => { // (object, parent)
+    let btnLevel = createDivId(`level${object.level}`, parent);
+    btnLevel.setAttribute("class", "btnLevel");
+    btnLevel.innerText = object.level;
+    btnLevel.addEventListener("click", () => openLevel(object));
+    return btnLevel;
 }
 
-let openBoard = () => {
-    let initialBoard = createDivId("initialBoard", main);
+// let createLevels = (id, number, objectLevel, parent) => { // (object, parent)
+//     let level = createDivId(id, parent); // createDivId(`level${object.level}`, parent)
+//     level.setAttribute("class", "levelBtn");
+//     level.innerText = number; // object.level
+//     level.addEventListener("click", () => openLevel(objectLevel)); // object
+//     return level;
+// }
 
-    let levels = createDivId("levels", initialBoard);
+let openMenu = () => {
+    let menu = createDivId("menu", main);
 
-    let level1 = createLevels("level1", 1, objectLevel1, levels);
-    let level2 = createLevels("level2", 2, objectLevel2, levels);
-    let level3 = createLevels("level3", 3, objectLevel3, levels);
-    let level4 = createLevels("level4", 4, objectLevel4, levels);
-    let level5 = createLevels("level5", 5, objectLevel5, levels);
-    let level6 = createLevels("level6", 6, objectLevel6, levels);
+    let btnsLevels = createDivId("btnsLevels", menu);
 
-    let message = createDivId("message", initialBoard);
+    for(i=0; i<=5; i++) {
+        createLevels(levels[i], btnsLevels);
+    }
+
+    let message = createDivId("message", menu);
     message.innerHTML = "Complete levels to unlock new ones";
 }
 
@@ -198,7 +219,7 @@ let gameOver = () => {
             main.removeChild(main.firstChild);
         }
 
-        openBoard();
+        openMenu();
     })
 }
 
@@ -235,6 +256,56 @@ let verifySoundPreference = () => {
         pauseMusic();
     }
 }
+
+// let Card = (image) => {
+//     this.image = image;
+//     this.isFaceDown = true;
+//     this.isActive = true;
+
+//     this.onclick = () => {
+//         if (!this.isActive) {
+//             return;
+//         }
+//         this.isFaceDown = false;
+//         // animacao
+//         if (count == 0) {
+//             firstSelectedCard = this;
+//             count = 1;
+//             return;
+//         }
+//         if (count == 1) {
+//             secondSelectedCard = this;
+//             // avalia se sao iguais
+//             count = 0;
+//             evaluateRound();
+//         }
+//     }
+    
+// }
+
+// let evaluateRound = (object) => {
+//     if (firstSelectedCard.image === secondSelectedCard.image) {
+//         count = 0;
+//         matchingCards++;
+//         firstSelectedCard.isActive = false;
+//         secondSelectedCard.isActive = false;
+
+//         if (window.navigator && window.navigator.vibrate) {
+//             setTimeout(function () { window.navigator.vibrate(200); }, 500);
+//         }
+//         if(matchingCards == object.numberOfCards) {
+//             clearInterval(timer);
+//         }
+//     } else {
+//         firstSelectedCard.isFaceDown = true;
+//         secondSelectedCard.isFaceDown = true;
+
+       
+//         setTimeout(function () { firstSelectedCard.style.transform = ""; }, 1000);
+//         setTimeout(function () { secondSelectedCard.style.transform = ""; allow = true; }, 1000);
+//         count = 0;
+//     }
+// }
 
 let openLevel = (object) => {
     while (main.firstChild) {
@@ -276,7 +347,7 @@ let openLevel = (object) => {
 
     cards.forEach(card => {
         card.addEventListener("click", () => {
-            if (allow == true && card.classList.contains("faceDown")) {
+            if (allow && card.classList.contains("faceDown")) {
                 card.style.transform = "rotateY(180deg)";
                 count++;
                 if (count == 1) {

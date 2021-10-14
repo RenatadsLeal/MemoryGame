@@ -95,7 +95,7 @@ main {
     transform: scale(1);
 }
 
-#initialBoard {
+#menu {
     background: var(--light-orange);
     width: 90vw;
     max-height: 90vh;
@@ -106,7 +106,7 @@ main {
     row-gap: 7rem;
 }
 
-#levels {
+#btnsLevels {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
@@ -114,7 +114,7 @@ main {
     row-gap: 1rem;
 }
 
-.levelBtn {
+.btnLevel {
     background: center / contain no-repeat url(../imgs/level_btn.png);
     width: 5rem;
     height: 5rem;
