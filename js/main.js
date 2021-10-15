@@ -3,20 +3,6 @@ let btnStart = document.querySelector("#btnStart");
 let main = document.querySelector("main");
 let body = document.body;
 
-let clickSound = new Audio("./audios/click.mp3");
-
-let clearMain = () => {
-    while (main.firstChild) {
-        main.removeChild(main.firstChild);
-    }
-}
-
-btnStart.addEventListener("click", () => {
-    clearMain();
-    clickSound.play();
-    openMenu();
-})
-
 let createDivId = (id, parent) => {
     let levelDiv = document.createElement("div");
     levelDiv.setAttribute("id", id);
@@ -39,7 +25,56 @@ let createButton = (id, text, parent) => {
     return btn;
 }
 
-function Level(level, numberOfCards, minutes, seconds){
+let introMusic = new Audio("./audios/intro.wav");
+
+let gameMusic = new Audio("./audios/game.wav");
+let soundOn = true;
+let playMusic = (music) => {
+    music.play();
+    music.loop = true;
+    soundOn = true;
+}
+let pauseMusic = (music) => {
+    music.pause();
+    soundOn = false;
+}
+
+let playPauseMusic = (music) => {
+    if (soundOn) {
+        pauseMusic(music);
+    } else {
+        playMusic(music);
+    }
+}
+
+let verifySoundPreference = (music) => {
+    if (soundOn) {
+        playMusic(music);
+    } else {
+        pauseMusic(music);
+    }
+}
+
+let clickSound = new Audio("./audios/click.mp3");
+
+let clearMain = () => {
+    while (main.firstChild) {
+        main.removeChild(main.firstChild);
+    }
+}
+
+btnStart.addEventListener("click", () => {
+    clearMain();
+    clickSound.play();
+    openMenu();
+    verifySoundPreference(introMusic);
+    let btnMusic = createButton("btnMusic", "play/pause", main);
+    btnMusic.addEventListener("click", () => {
+        playPauseMusic(introMusic);
+    })
+})
+
+function Level(level, numberOfCards, minutes, seconds) {
     this.level = level;
     this.numberOfCards = numberOfCards;
     this.minutes = minutes;
@@ -64,13 +99,14 @@ let createLevels = (object, parent) => {
 }
 
 let openMenu = () => {
+    introMusic.pause();
     clearMain();
-    
+
     let menu = createDivId("menu", main);
 
     let btnsLevels = createDivId("btnsLevels", menu);
 
-    for(i=0; i<=5; i++) {
+    for (i = 0; i <= 5; i++) {
         createLevels(levels[i], btnsLevels);
     }
 
@@ -78,16 +114,32 @@ let openMenu = () => {
     message.innerHTML = "Complete levels to unlock new ones";
 }
 
-const cards = ["./imgs/banana.png",
-    "./imgs/avocado.png",
-    "./imgs/cherry.png",
-    "./imgs/strawberry.png",
-    "./imgs/watermelon.png",
-    "./imgs/orange.png",
-    "./imgs/broccoli.png",
-    "./imgs/carrot.png",
-    "./imgs/radish.png",
-    "./imgs/tomato.png"];
+const cards = ["./imgs/banana.webp",
+    "./imgs/avocado.webp",
+    "./imgs/cherry.webp",
+    "./imgs/strawberry.webp",
+    "./imgs/watermelon.webp",
+    "./imgs/orange.webp",
+    "./imgs/broccoli.webp",
+    "./imgs/carrot.webp",
+    "./imgs/radish.webp",
+    "./imgs/tomato.webp",
+    "./imgs/lollipop.webp",
+    "./imgs/cupcake.webp",
+    "./imgs/donut.webp",
+    "./imgs/ice_cream.webp",
+    "./imgs/sun.webp",
+    "./imgs/star.webp",
+    "./imgs/cloud.webp",
+    "./imgs/moon.webp",
+    "./imgs/sunflower.webp",
+    "./imgs/mushroom.webp",
+    "./imgs/hazelnut.webp",
+    "./imgs/cactus.webp",
+    "./imgs/soda.webp",
+    "./imgs/hamburger.webp",
+    "./imgs/fries.webp",
+    "./imgs/hot_dog.webp"];
 
 let duplicateCards = number => {
     let selectedCards = cards.slice(0, number);
@@ -117,7 +169,7 @@ let createCard = element => {
 
     let cardFront = createDivClass("cardFront", flipper);
     let cardBack = createDivClass("cardBack", flipper);
- 
+
     let image = document.createElement("img");
     image.setAttribute("src", element);
     cardFront.appendChild(image);
@@ -128,8 +180,8 @@ let countdown;
 let timer;
 
 let currentLevel;
-let minutesLeft;
-let secondsLeft;
+let minutesLeft = 0;
+let secondsLeft = 0;
 
 let updateTimer = () => {
     if (secondsLeft == 0 && minutesLeft > 0) {
@@ -167,45 +219,25 @@ let gameOver = () => {
 let firstSelectedCard;
 let secondSelectedCard;
 let cardCount = 0;
-let clickCount = 0;
+let clickCount = 1;
 let allow = true;
 let matchingCards = 0;
-
-let gameMusic = new Audio("./audios/game.wav");
-let soundOn = true;
-let playMusic = () => {
-    gameMusic.play();
-    gameMusic.loop = true;
-    soundOn = true;
-}
-let pauseMusic = () => {
-    gameMusic.pause();
-    soundOn = false;
+let calculateScore = () => {
+    let score = (((minutesLeft * 60) + secondsLeft) / clickCount).toFixed(3);
+    return score;
 }
 
-let playPauseMusic = () => {
-    if (soundOn) {
-        pauseMusic();
-    } else {
-        playMusic();
-    }
-}
 
-let verifySoundPreference = () => {
-    if (soundOn) {
-        playMusic();
-    } else {
-        pauseMusic();
-    }
-}
+
 
 let openLevel = (object) => {
     clearMain();
 
-    verifySoundPreference();
+    introMusic.pause();
+    verifySoundPreference(gameMusic);
     let btnMusic = createButton("btnMusic", "play/pause", main);
     btnMusic.addEventListener("click", () => {
-        playPauseMusic();
+        playPauseMusic(gameMusic);
     })
 
     currentLevel = object;
@@ -213,6 +245,8 @@ let openLevel = (object) => {
     secondsLeft = object.seconds;
 
     countdown = createDivId("countdown", main);
+    let scoreboard = createDivId("scoreboard", main);
+
 
     startTimer();
 
@@ -250,6 +284,7 @@ let openLevel = (object) => {
                     secondSelectedCard = card;
                     clickCount++;
 
+
                     if (firstSelectedCard.innerHTML == secondSelectedCard.innerHTML) {
                         cardCount = 0;
                         matchingCards++;
@@ -258,8 +293,9 @@ let openLevel = (object) => {
                         if (window.navigator && window.navigator.vibrate) {
                             setTimeout(function () { window.navigator.vibrate(200); }, 500);
                         }
-                        if(matchingCards == object.numberOfCards) {
+                        if (matchingCards == object.numberOfCards) {
                             clearInterval(timer);
+                            scoreboard.innerHTML = calculateScore();
                         }
                     } else {
                         allow = false;
@@ -274,12 +310,10 @@ let openLevel = (object) => {
     })
 }
 
-// armazenar score
+// score local storage
 // bordinha da carta
 // mexer cor botao start
 // botao play/pause
 // alinhar coisas
 // cartas pulando no fim (maozinhas)
 // olhinho piscar
-
-// tempo restante / numero de clicks * 100 (Marquinho)

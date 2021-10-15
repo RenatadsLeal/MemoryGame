@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Gluten:wght@500&display=swap');
-/* Lembrar de colocar cores em variaveis!!! */
 
 * {
     margin: 0;
@@ -101,8 +100,8 @@ main {
 
 #menu {
     background: var(--light-orange);
-    width: 90vw;
-    max-height: 90vh;
+    width: 90%;
+    max-height: 90%;
     border-radius: 1rem;
     border: 2px solid var(--dark-orange);
     padding: 1rem;
@@ -119,7 +118,7 @@ main {
 }
 
 .btnLevel {
-    background: center / contain no-repeat url(../imgs/level_btn.png);
+    background: center / contain no-repeat url(../imgs/level_btn.webp);
     width: 5rem;
     height: 5rem;
     display: flex;
@@ -135,8 +134,8 @@ main {
 
 .gameBoard {
     background: var(--light-orange);
-    width: 90vw;
-    max-height: 90vh;
+    width: 90%;
+    max-height: 90%;
     border-radius: 1rem;
     border: 2px solid var(--dark-orange);
     padding: 1rem;
@@ -203,13 +202,13 @@ main {
 }
 
 .cardBack {
-    background: center / contain no-repeat url(../imgs/cardBack.png);
+    background: center / contain no-repeat url(../imgs/card_back.webp);
 }
 
 #gameOver {
-    width: 100%;
-    height: 100%;
-    background: center / contain no-repeat url(../imgs/gameOver.png) var(--light-orange-opacity);
+    width: 90%;
+    height: 90%;
+    background: center / contain no-repeat url(../imgs/game_over.webp) var(--light-orange-opacity);
     position: absolute;
     z-index: 1;
     padding: 1rem;
