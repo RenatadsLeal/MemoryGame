@@ -32,6 +32,8 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 @keyframes popOh {
@@ -206,8 +208,8 @@ main {
 }
 
 #gameOver {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     background: center / contain no-repeat url(../imgs/game_over.webp) var(--light-orange-opacity);
     position: absolute;
     z-index: 1;
