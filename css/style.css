@@ -8,6 +8,10 @@
     font-family: 'Gluten', cursive;
 }
 
+html {
+    height: 100%;
+}
+
 :root {
     --dark-orange: #ffbc66;
     --medium-orange: #f9cc92;
@@ -16,12 +20,12 @@
 }
 
 body {
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Gluten', cursive;
-    background: center / cover no-repeat url(../imgs/background.png);
+    background: center / cover no-repeat url(../imgs/background.webp);
 }
 
 main {

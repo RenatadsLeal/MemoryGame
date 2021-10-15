@@ -5,13 +5,14 @@ let body = document.body;
 
 let clickSound = new Audio("./audios/click.mp3");
 
-btnStart.addEventListener("click", () => {
+let clearMain = () => {
     while (main.firstChild) {
         main.removeChild(main.firstChild);
     }
+}
 
-    // logo.style.display = "none";
-    // btnStart.style.display = "none";
+btnStart.addEventListener("click", () => {
+    clearMain();
     clickSound.play();
     openMenu();
 })
@@ -54,49 +55,7 @@ let levels = [
     new Level(6, 26, 1, 0)
 ]
 
-// let objectLevel1 = {
-//     level: 1,
-//     numberOfCards: 6,
-//     minutes: 1,
-//     seconds: 0,
-// };
-
-// let objectLevel2 = {
-//     level: 2,
-//     numberOfCards: 10,
-//     minutes: 0,
-//     seconds: 5,
-// };
-
-// let objectLevel3 = {
-//     level: 3,
-//     numberOfCards: 14,
-//     minutes: 0,
-//     seconds: 3
-// };
-
-// let objectLevel4 = {
-//     level: 4,
-//     numberOfCards: 18,
-//     minutes: 0,
-//     seconds: 3,
-// };
-
-// let objectLevel5 = {
-//     level: 5,
-//     numberOfCards: 22,
-//     minutes: 0,
-//     seconds: 3,
-// };
-
-// let objectLevel6 = {
-//     level: 6,
-//     numberOfCards: 26,
-//     minutes: 0,
-//     seconds: 3,
-// };
-
-let createLevels = (object, parent) => { // (object, parent)
+let createLevels = (object, parent) => {
     let btnLevel = createDivId(`level${object.level}`, parent);
     btnLevel.setAttribute("class", "btnLevel");
     btnLevel.innerText = object.level;
@@ -104,15 +63,9 @@ let createLevels = (object, parent) => { // (object, parent)
     return btnLevel;
 }
 
-// let createLevels = (id, number, objectLevel, parent) => { // (object, parent)
-//     let level = createDivId(id, parent); // createDivId(`level${object.level}`, parent)
-//     level.setAttribute("class", "levelBtn");
-//     level.innerText = number; // object.level
-//     level.addEventListener("click", () => openLevel(objectLevel)); // object
-//     return level;
-// }
-
 let openMenu = () => {
+    clearMain();
+    
     let menu = createDivId("menu", main);
 
     let btnsLevels = createDivId("btnsLevels", menu);
@@ -206,26 +159,15 @@ let gameOver = () => {
     let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", gameOver);
     let btnTryAgain = createButton("btnTryAgain", "Try again", gameOver);
 
-    btnTryAgain.addEventListener("click", () => {
-        while (main.firstChild) {
-            main.removeChild(main.firstChild);
-        }
+    btnTryAgain.addEventListener("click", () => openLevel(currentLevel));
 
-        openLevel(currentLevel);
-    })
-
-    btnLevelsMenu.addEventListener("click", () => {
-        while (main.firstChild) {
-            main.removeChild(main.firstChild);
-        }
-
-        openMenu();
-    })
+    btnLevelsMenu.addEventListener("click", () => openMenu());
 }
 
 let firstSelectedCard;
 let secondSelectedCard;
-let count = 0;
+let cardCount = 0;
+let clickCount = 0;
 let allow = true;
 let matchingCards = 0;
 
@@ -257,60 +199,8 @@ let verifySoundPreference = () => {
     }
 }
 
-// let Card = (image) => {
-//     this.image = image;
-//     this.isFaceDown = true;
-//     this.isActive = true;
-
-//     this.onclick = () => {
-//         if (!this.isActive) {
-//             return;
-//         }
-//         this.isFaceDown = false;
-//         // animacao
-//         if (count == 0) {
-//             firstSelectedCard = this;
-//             count = 1;
-//             return;
-//         }
-//         if (count == 1) {
-//             secondSelectedCard = this;
-//             // avalia se sao iguais
-//             count = 0;
-//             evaluateRound();
-//         }
-//     }
-    
-// }
-
-// let evaluateRound = (object) => {
-//     if (firstSelectedCard.image === secondSelectedCard.image) {
-//         count = 0;
-//         matchingCards++;
-//         firstSelectedCard.isActive = false;
-//         secondSelectedCard.isActive = false;
-
-//         if (window.navigator && window.navigator.vibrate) {
-//             setTimeout(function () { window.navigator.vibrate(200); }, 500);
-//         }
-//         if(matchingCards == object.numberOfCards) {
-//             clearInterval(timer);
-//         }
-//     } else {
-//         firstSelectedCard.isFaceDown = true;
-//         secondSelectedCard.isFaceDown = true;
-
-       
-//         setTimeout(function () { firstSelectedCard.style.transform = ""; }, 1000);
-//         setTimeout(function () { secondSelectedCard.style.transform = ""; allow = true; }, 1000);
-//         count = 0;
-//     }
-// }
-
 let openLevel = (object) => {
-    while (main.firstChild) {
-        main.removeChild(main.firstChild);
-    }
+    clearMain();
 
     verifySoundPreference();
     let btnMusic = createButton("btnMusic", "play/pause", main);
@@ -349,18 +239,19 @@ let openLevel = (object) => {
         card.addEventListener("click", () => {
             if (allow && card.classList.contains("faceDown")) {
                 card.style.transform = "rotateY(180deg)";
-                count++;
-                if (count == 1) {
+                cardCount++;
+                if (cardCount == 1) {
                     firstSelectedCard = card;
                 }
                 if (cards.indexOf(firstSelectedCard) == cards.indexOf(card)) {
-                    count = 1;
+                    cardCount = 1;
                 }
-                if (count == 2) {
+                if (cardCount == 2) {
                     secondSelectedCard = card;
+                    clickCount++;
 
                     if (firstSelectedCard.innerHTML == secondSelectedCard.innerHTML) {
-                        count = 0;
+                        cardCount = 0;
                         matchingCards++;
                         firstSelectedCard.classList.remove("faceDown");
                         secondSelectedCard.classList.remove("faceDown");
@@ -374,7 +265,7 @@ let openLevel = (object) => {
                         allow = false;
                         setTimeout(function () { firstSelectedCard.style.transform = ""; }, 1000);
                         setTimeout(function () { secondSelectedCard.style.transform = ""; allow = true; }, 1000);
-                        count = 0;
+                        cardCount = 0;
                     }
                 }
             }
@@ -390,3 +281,5 @@ let openLevel = (object) => {
 // alinhar coisas
 // cartas pulando no fim (maozinhas)
 // olhinho piscar
+
+// tempo restante / numero de clicks * 100 (Marquinho)
