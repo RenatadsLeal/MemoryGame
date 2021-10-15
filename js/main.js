@@ -25,9 +25,15 @@ let createButton = (id, text, parent) => {
     return btn;
 }
 
-let introMusic = new Audio("./audios/intro.wav");
+let clearMain = () => {
+    while (main.firstChild) { main.removeChild(main.firstChild) }
+}
 
+let introMusic = new Audio("./audios/intro.wav");
+let clickSound = new Audio("./audios/click.mp3");
 let gameMusic = new Audio("./audios/game.wav");
+let gameOverSound = new Audio("./audios/gameOver.mp3");
+
 let soundOn = true;
 let playMusic = (music) => {
     music.play();
@@ -40,38 +46,19 @@ let pauseMusic = (music) => {
 }
 
 let playPauseMusic = (music) => {
-    if (soundOn) {
-        pauseMusic(music);
-    } else {
-        playMusic(music);
-    }
+    if (soundOn) { pauseMusic(music) }
+    else { playMusic(music) }
 }
 
 let verifySoundPreference = (music) => {
-    if (soundOn) {
-        playMusic(music);
-    } else {
-        pauseMusic(music);
-    }
-}
-
-let clickSound = new Audio("./audios/click.mp3");
-
-let clearMain = () => {
-    while (main.firstChild) {
-        main.removeChild(main.firstChild);
-    }
+    if (soundOn) { playMusic(music) }
+    else { pauseMusic(music) }
 }
 
 btnStart.addEventListener("click", () => {
-    clearMain();
+    
     clickSound.play();
     openMenu();
-    verifySoundPreference(introMusic);
-    let btnMusic = createButton("btnMusic", "play/pause", main);
-    btnMusic.addEventListener("click", () => {
-        playPauseMusic(introMusic);
-    })
 })
 
 function Level(level, numberOfCards, minutes, seconds) {
@@ -99,16 +86,18 @@ let createLevels = (object, parent) => {
 }
 
 let openMenu = () => {
-    introMusic.pause();
     clearMain();
 
-    let menu = createDivId("menu", main);
+    verifySoundPreference(introMusic);
+    let btnMusic = createButton("btnMusic", "play/pause", main);
+    btnMusic.addEventListener("click", () => {
+        playPauseMusic(introMusic);
+    })
 
+    let menu = createDivId("menu", main);
     let btnsLevels = createDivId("btnsLevels", menu);
 
-    for (i = 0; i <= 5; i++) {
-        createLevels(levels[i], btnsLevels);
-    }
+    for (i = 0; i <= 5; i++) { createLevels(levels[i], btnsLevels)}
 
     let message = createDivId("message", menu);
     message.innerHTML = "Complete levels to unlock new ones";
@@ -154,7 +143,6 @@ let shuffle = array => {
     while (currentIndex != 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
-
         [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
 }
@@ -178,7 +166,6 @@ let createCard = element => {
 
 let countdown;
 let timer;
-
 let currentLevel;
 let minutesLeft = 0;
 let secondsLeft = 0;
@@ -201,18 +188,16 @@ let startTimer = () => {
     updateTimer();
 }
 
-let gameOverSound = new Audio("./audios/gameOver.mp3");
-
 let gameOver = () => {
     gameMusic.pause();
-    gameOverSound.play();
+    if (soundOn) {gameOverSound.play()};
+    // verifySoundPreference(gameOverSound);
     let gameOver = createDivId("gameOver", main);
 
     let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", gameOver);
     let btnTryAgain = createButton("btnTryAgain", "Try again", gameOver);
 
     btnTryAgain.addEventListener("click", () => openLevel(currentLevel));
-
     btnLevelsMenu.addEventListener("click", () => openMenu());
 }
 
@@ -226,9 +211,6 @@ let calculateScore = () => {
     let score = (((minutesLeft * 60) + secondsLeft) / clickCount).toFixed(3);
     return score;
 }
-
-
-
 
 let openLevel = (object) => {
     clearMain();
@@ -246,7 +228,6 @@ let openLevel = (object) => {
 
     countdown = createDivId("countdown", main);
     let scoreboard = createDivId("scoreboard", main);
-
 
     startTimer();
 

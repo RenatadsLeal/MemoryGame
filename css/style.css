@@ -106,7 +106,7 @@ main {
     border: 2px solid var(--dark-orange);
     padding: 1rem;
     display: grid;
-    row-gap: 7rem;
+    row-gap: 3rem;
 }
 
 #btnsLevels {
