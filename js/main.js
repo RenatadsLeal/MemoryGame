@@ -25,6 +25,14 @@ let createButton = (id, text, parent) => {
     return btn;
 }
 
+let createImage = (src, id, parent) => {
+    let image = document.createElement("img");
+    image.setAttribute("src", src);
+    image.setAttribute("id", id);
+    parent.appendChild(image);
+    return image;
+}
+
 let clearMain = () => {
     while (main.firstChild) { main.removeChild(main.firstChild) }
 }
@@ -34,29 +42,36 @@ let clickSound = new Audio("./audios/click.mp3");
 let gameMusic = new Audio("./audios/game.wav");
 let gameOverSound = new Audio("./audios/gameOver.mp3");
 
-let soundOn = true;
+let soundPreference = true;
+let soundOn;
+let soundOff;
+
 let playMusic = (music) => {
     music.play();
     music.loop = true;
-    soundOn = true;
+    soundPreference = true;
+    soundOn.style.display = "block";
+    soundOff.style.display = "none";
 }
 let pauseMusic = (music) => {
     music.pause();
-    soundOn = false;
+    soundPreference = false;
+    soundOn.style.display = "none";
+    soundOff.style.display = "block";
 }
 
 let playPauseMusic = (music) => {
-    if (soundOn) { pauseMusic(music) }
+    if (soundPreference) { pauseMusic(music) }
     else { playMusic(music) }
 }
 
 let verifySoundPreference = (music) => {
-    if (soundOn) { playMusic(music) }
+    if (soundPreference) { playMusic(music) }
     else { pauseMusic(music) }
 }
 
 btnStart.addEventListener("click", () => {
-    
+
     clickSound.play();
     openMenu();
 })
@@ -77,6 +92,17 @@ let levels = [
     new Level(6, 26, 1, 0)
 ]
 
+let createBtnSound = (music) => {
+    let btnMusic = createDivId("btnMusic", main);
+    soundOn = createImage("./imgs/sound_on.webp", "soundOn", btnMusic);
+    soundOn.style.display = "block";
+    soundOff = createImage("./imgs/sound_off.webp", "soundOff", btnMusic);
+    soundOff.style.display = "none";
+    let sound = createImage("./imgs/sound.webp", "sound", btnMusic);
+    btnMusic.addEventListener("click", () => { playPauseMusic(music) });
+    verifySoundPreference(music);
+}
+
 let createLevels = (object, parent) => {
     let btnLevel = createDivId(`level${object.level}`, parent);
     btnLevel.setAttribute("class", "btnLevel");
@@ -88,16 +114,12 @@ let createLevels = (object, parent) => {
 let openMenu = () => {
     clearMain();
 
-    verifySoundPreference(introMusic);
-    let btnMusic = createButton("btnMusic", "play/pause", main);
-    btnMusic.addEventListener("click", () => {
-        playPauseMusic(introMusic);
-    })
+    createBtnSound(introMusic);
 
     let menu = createDivId("menu", main);
     let btnsLevels = createDivId("btnsLevels", menu);
 
-    for (i = 0; i <= 5; i++) { createLevels(levels[i], btnsLevels)}
+    for (i = 0; i <= 5; i++) { createLevels(levels[i], btnsLevels) };
 
     let message = createDivId("message", menu);
     message.innerHTML = "Complete levels to unlock new ones";
@@ -190,7 +212,7 @@ let startTimer = () => {
 
 let gameOver = () => {
     gameMusic.pause();
-    if (soundOn) {gameOverSound.play()};
+    if (soundOn) { gameOverSound.play() };
     // verifySoundPreference(gameOverSound);
     let gameOver = createDivId("gameOver", main);
 
@@ -216,11 +238,13 @@ let openLevel = (object) => {
     clearMain();
 
     introMusic.pause();
-    verifySoundPreference(gameMusic);
-    let btnMusic = createButton("btnMusic", "play/pause", main);
-    btnMusic.addEventListener("click", () => {
-        playPauseMusic(gameMusic);
-    })
+    createBtnSound(gameMusic);
+
+    // verifySoundPreference(gameMusic);
+    // let btnMusic = createButton("btnMusic", "play/pause", main);
+    // btnMusic.addEventListener("click", () => {
+    //     playPauseMusic(gameMusic);
+    // })
 
     currentLevel = object;
     minutesLeft = object.minutes;
@@ -291,6 +315,8 @@ let openLevel = (object) => {
     })
 }
 
+// instrucoes
+// win score, imagem, estrelas, btn menu e proximo nivel
 // score local storage
 // bordinha da carta
 // mexer cor botao start
