@@ -76,20 +76,21 @@ btnStart.addEventListener("click", () => {
     openMenu();
 })
 
-function Level(level, numberOfCards, minutes, seconds) {
+function Level(level, numberOfCards, minutes, seconds, blocked) {
     this.level = level;
     this.numberOfCards = numberOfCards;
     this.minutes = minutes;
     this.seconds = seconds;
+    this.blocked = blocked;
 };
 
 let levels = [
-    new Level(1, 6, 1, 0),
-    new Level(2, 10, 0, 5),
-    new Level(3, 14, 0, 10),
-    new Level(4, 18, 1, 0),
-    new Level(5, 22, 1, 0),
-    new Level(6, 26, 1, 0)
+    new Level(1, 6, 1, 0, false),
+    new Level(2, 10, 0, 5, true),
+    new Level(3, 14, 0, 10, true),
+    new Level(4, 18, 1, 0, true),
+    new Level(5, 22, 1, 0, true),
+    new Level(6, 26, 1, 0, true)
 ]
 
 let createBtnSound = (music) => {
@@ -107,7 +108,13 @@ let createLevels = (object, parent) => {
     let btnLevel = createDivId(`level${object.level}`, parent);
     btnLevel.setAttribute("class", "btnLevel");
     btnLevel.innerText = object.level;
-    btnLevel.addEventListener("click", () => openLevel(object));
+    if(!object.blocked) {
+        btnLevel.addEventListener("click", () => openLevel(object));
+        btnLevel.style.opacity = "1";
+        btnLevel.style.cursor = "pointer";
+    } else {
+        btnLevel.style.opacity = "0.5";
+    }
     return btnLevel;
 }
 
@@ -232,10 +239,14 @@ let youWin = () => {
     gameMusic.pause();
     if (soundPreference) { gameOverSound.play() };
     // verifySoundPreference(gameOverSound);
+
+    levels[currentLevelIndex+1].blocked = false;
+    console.log(levels[currentLevelIndex+1].blocked);
+
     let youWin = createDivId("youWin", main);
     let imgYouWin = document.createElement("img");
     imgYouWin.setAttribute("src", "./imgs/you_win.webp");
-    gameOver.appendChild(imgYouWin);
+    youWin.appendChild(imgYouWin);
 
     let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", youWin);
     let btnNextLevel = createButton("btnNextLevel", "Next level", youWin);
@@ -262,6 +273,9 @@ let openLevel = (object) => {
     // console.log(levels.indexOf(object));
     // console.log(object.level+=1);
     // console.log(object.level);
+
+    
+
     clearMain();
     let firstSelectedCard;
     let secondSelectedCard;
@@ -279,6 +293,7 @@ let openLevel = (object) => {
     // })
 
     currentLevelIndex = levels.indexOf(object);
+    console.log(levels[currentLevelIndex+1].blocked);
     minutesLeft = object.minutes;
     secondsLeft = object.seconds;
 
@@ -341,6 +356,7 @@ let openLevel = (object) => {
                             clearInterval(timer);
                             scoreboard.innerHTML = calculateScore();
                             youWin();
+
                         }
                     } else {
                         allow = false;

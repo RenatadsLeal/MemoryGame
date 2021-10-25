@@ -89,7 +89,7 @@ main {
     /* animation: popMemory 1s; */
 }
 
-#btnStart {
+#btnStart, #btnLevelsMenu, #btnTryAgain, #btnNextLevel {
     color: whitesmoke;
     font-size: 1.2rem;
     border-radius: 1rem;
@@ -98,6 +98,7 @@ main {
     background: var(--medium-orange);
     padding: 1rem 3rem;
     transform: scale(1);
+    cursor: pointer;
 }
 
 #menu {
@@ -114,6 +115,7 @@ main {
 
 #btnMusic {
     display: flex;
+    cursor: pointer;
 }
 
 #btnMusic img {
@@ -223,10 +225,12 @@ main {
     z-index: 1;
     padding: 1rem;
     background: var(--light-orange-opacity);
+    text-align: center;
+
 }
 
-#gameOver img {
-    width: 20%;
+#gameOver img, #youWin img {
+    width: 15rem;
 }
 
 @media only screen and (min-width: 1000px) {
