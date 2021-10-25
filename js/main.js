@@ -86,7 +86,7 @@ function Level(level, numberOfCards, minutes, seconds) {
 let levels = [
     new Level(1, 6, 1, 0),
     new Level(2, 10, 0, 5),
-    new Level(3, 14, 1, 0),
+    new Level(3, 14, 0, 10),
     new Level(4, 18, 1, 0),
     new Level(5, 22, 1, 0),
     new Level(6, 26, 1, 0)
@@ -188,7 +188,7 @@ let createCard = element => {
 
 let countdown;
 let timer;
-let currentLevel;
+let currentLevelIndex;
 let minutesLeft = 0;
 let secondsLeft = 0;
 
@@ -212,30 +212,62 @@ let startTimer = () => {
 
 let gameOver = () => {
     gameMusic.pause();
-    if (soundOn) { gameOverSound.play() };
+    if (soundPreference) { gameOverSound.play() };
     // verifySoundPreference(gameOverSound);
     let gameOver = createDivId("gameOver", main);
+    let imgGameOver = document.createElement("img");
+    imgGameOver.setAttribute("src", "./imgs/game_over.webp");
+    gameOver.appendChild(imgGameOver);
 
     let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", gameOver);
     let btnTryAgain = createButton("btnTryAgain", "Try again", gameOver);
 
-    btnTryAgain.addEventListener("click", () => openLevel(currentLevel));
+    btnTryAgain.addEventListener("click", () => {
+        openLevel(levels[currentLevelIndex]);
+    });
     btnLevelsMenu.addEventListener("click", () => openMenu());
 }
 
-let firstSelectedCard;
-let secondSelectedCard;
-let cardCount = 0;
-let clickCount = 1;
-let allow = true;
-let matchingCards = 0;
+let youWin = () => {
+    gameMusic.pause();
+    if (soundPreference) { gameOverSound.play() };
+    // verifySoundPreference(gameOverSound);
+    let youWin = createDivId("youWin", main);
+    let imgYouWin = document.createElement("img");
+    imgYouWin.setAttribute("src", "./imgs/you_win.webp");
+    gameOver.appendChild(imgYouWin);
+
+    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", youWin);
+    let btnNextLevel = createButton("btnNextLevel", "Next level", youWin);
+
+    btnNextLevel.addEventListener("click", () => {
+        openLevel(levels[currentLevelIndex+1]);
+    });
+    btnLevelsMenu.addEventListener("click", () => openMenu());
+}
+
+// let firstSelectedCard;
+// let secondSelectedCard;
+// let cardCount = 1;
+let clickCountScore = 1;
+// let allow = true;
+// let matchingCards = 0;
+
 let calculateScore = () => {
-    let score = (((minutesLeft * 60) + secondsLeft) / clickCount).toFixed(3);
+    let score = (((minutesLeft * 60) + secondsLeft) / clickCountScore).toFixed(3);
     return score;
 }
 
 let openLevel = (object) => {
+    // console.log(levels.indexOf(object));
+    // console.log(object.level+=1);
+    // console.log(object.level);
     clearMain();
+    let firstSelectedCard;
+    let secondSelectedCard;
+    let cardCount = 1;
+    let allow = true;
+    let matchingCards = 0;
 
     introMusic.pause();
     createBtnSound(gameMusic);
@@ -246,7 +278,7 @@ let openLevel = (object) => {
     //     playPauseMusic(gameMusic);
     // })
 
-    currentLevel = object;
+    currentLevelIndex = levels.indexOf(object);
     minutesLeft = object.minutes;
     secondsLeft = object.seconds;
 
@@ -277,21 +309,28 @@ let openLevel = (object) => {
     cards.forEach(card => {
         card.addEventListener("click", () => {
             if (allow && card.classList.contains("faceDown")) {
-                card.style.transform = "rotateY(180deg)";
-                cardCount++;
+
+
                 if (cardCount == 1) {
+                    card.style.transform = "rotateY(180deg)";
                     firstSelectedCard = card;
+                    cardCount++;
                 }
-                if (cards.indexOf(firstSelectedCard) == cards.indexOf(card)) {
-                    cardCount = 1;
-                }
+                // if (cards.indexOf(firstSelectedCard) == cards.indexOf(card)) {
+                //     cardCount = 1;
+                //     console.log("TequilA!!");
+                // }
                 if (cardCount == 2) {
+                    if (cards.indexOf(firstSelectedCard) == cards.indexOf(card)) {
+                        // cardCount = 1;
+                        return;
+                    }
+                    card.style.transform = "rotateY(180deg)";
                     secondSelectedCard = card;
-                    clickCount++;
-
-
+                    clickCountScore++;
+                    
                     if (firstSelectedCard.innerHTML == secondSelectedCard.innerHTML) {
-                        cardCount = 0;
+                        cardCount = 1;
                         matchingCards++;
                         firstSelectedCard.classList.remove("faceDown");
                         secondSelectedCard.classList.remove("faceDown");
@@ -301,16 +340,16 @@ let openLevel = (object) => {
                         if (matchingCards == object.numberOfCards) {
                             clearInterval(timer);
                             scoreboard.innerHTML = calculateScore();
+                            youWin();
                         }
                     } else {
                         allow = false;
                         setTimeout(function () { firstSelectedCard.style.transform = ""; }, 1000);
                         setTimeout(function () { secondSelectedCard.style.transform = ""; allow = true; }, 1000);
-                        cardCount = 0;
+                        cardCount = 1;
                     }
                 }
             }
-
         })
     })
 }
