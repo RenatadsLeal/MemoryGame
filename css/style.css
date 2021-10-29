@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Gluten:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
 
 * {
     margin: 0;
@@ -16,6 +17,8 @@ html {
     --medium-orange: #f9cc92;
     --light-orange-opacity: #fbefe2d0;
     --light-orange: #fbefe2;
+    --light-red: #fa6157;
+    --medium-brown: #9d5651;
 }
 
 body {
@@ -89,7 +92,7 @@ main {
     /* animation: popMemory 1s; */
 }
 
-#btnStart, #btnLevelsMenu, #btnTryAgain, #btnNextLevel {
+#btnStart {
     color: whitesmoke;
     font-size: 1.2rem;
     border-radius: 1rem;
@@ -211,14 +214,17 @@ main {
 }
 
 .cardFront img {
-    width: 3rem;
+    width: 3.5rem;
 }
 
 .cardBack {
     background: center / contain no-repeat url(../imgs/card_back.webp);
 }
 
-#gameOver, #youWin {
+/* 
+Aqui usamos absolute para poder usar o z-index para fazer fica em cima 
+de tudo e nao poder clicar em nada embaixo!!! */
+#opaqueBackground {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -226,11 +232,51 @@ main {
     padding: 1rem;
     background: var(--light-orange-opacity);
     text-align: center;
-
 }
 
-#gameOver img, #youWin img {
-    width: 15rem;
+#youWin, #gameOver {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+#imgYouWin, #imgGameOver {
+    width: 16rem;
+}
+
+.starScore {
+    width: 2.3rem;
+}
+
+#scoreContainer {
+    color: var(--light-red);
+    text-shadow: 2px 2px var(--medium-brown);
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Secular One', sans-serif;
+}
+
+#btnsEndLevel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#btnLevelsMenu, #btnTryAgain, #btnNextLevel {
+    color: whitesmoke;
+    width: 9rem;
+    height: 2.7rem;
+    font-size: 0.9rem;
+    border-radius: 1rem;
+    border: 2px solid var(--dark-orange);
+    box-shadow: inset 0 0.5rem var(--light-orange), inset 0 -0.5rem var(--dark-orange);
+    background: var(--medium-orange);
+    padding: 0.8rem;
+    transform: scale(1);
+    cursor: pointer;
 }
 
 @media only screen and (min-width: 1000px) {

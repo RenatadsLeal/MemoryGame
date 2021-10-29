@@ -76,17 +76,20 @@ btnStart.addEventListener("click", () => {
     openMenu();
 })
 
-function Level(level, numberOfCards, minutes, seconds, blocked) {
-    this.level = level;
+function Level(number, numberOfCards, minutes, seconds, blocked) {
+    this.number = number;
     this.numberOfCards = numberOfCards;
     this.minutes = minutes;
     this.seconds = seconds;
     this.blocked = blocked;
+    // this.starsRequired = starsRequired;
+    this.score = 0;
+    this.starsWon = 0;
 };
 
-let levels = [
+let levels = [ 
     new Level(1, 6, 1, 0, false),
-    new Level(2, 10, 0, 5, true),
+    new Level(2, 10, 0, 5, false),
     new Level(3, 14, 0, 10, true),
     new Level(4, 18, 1, 0, true),
     new Level(5, 22, 1, 0, true),
@@ -104,12 +107,12 @@ let createBtnSound = (music) => {
     verifySoundPreference(music);
 }
 
-let createLevels = (object, parent) => {
-    let btnLevel = createDivId(`level${object.level}`, parent);
+let createLevels = (level, parent) => {
+    let btnLevel = createDivId(`level${level.number}`, parent);
     btnLevel.setAttribute("class", "btnLevel");
-    btnLevel.innerText = object.level;
-    if(!object.blocked) {
-        btnLevel.addEventListener("click", () => openLevel(object));
+    btnLevel.innerText = level.number;
+    if(!level.blocked) {
+        btnLevel.addEventListener("click", () => openLevel(level));
         btnLevel.style.opacity = "1";
         btnLevel.style.cursor = "pointer";
     } else {
@@ -221,8 +224,11 @@ let gameOver = () => {
     gameMusic.pause();
     if (soundPreference) { gameOverSound.play() };
     // verifySoundPreference(gameOverSound);
-    let gameOver = createDivId("gameOver", main);
+
+    let opaqueBackground = createDivId("opaqueBackground", main);
+    let gameOver = createDivId("gameOver", opaqueBackground);
     let imgGameOver = document.createElement("img");
+    imgGameOver.setAttribute("id", "imgGameOver");
     imgGameOver.setAttribute("src", "./imgs/game_over.webp");
     gameOver.appendChild(imgGameOver);
 
@@ -235,21 +241,55 @@ let gameOver = () => {
     btnLevelsMenu.addEventListener("click", () => openMenu());
 }
 
-let youWin = () => {
+let youWin = (level) => {
     gameMusic.pause();
     if (soundPreference) { gameOverSound.play() };
     // verifySoundPreference(gameOverSound);
 
     levels[currentLevelIndex+1].blocked = false;
-    console.log(levels[currentLevelIndex+1].blocked);
-
-    let youWin = createDivId("youWin", main);
+    // console.log(levels[currentLevelIndex+1].blocked);
+    
+    let opaqueBackground = createDivId("opaqueBackground", main);
+    let youWin = createDivId("youWin", opaqueBackground);
     let imgYouWin = document.createElement("img");
+    imgYouWin.setAttribute("id", "imgYouWin");
     imgYouWin.setAttribute("src", "./imgs/you_win.webp");
     youWin.appendChild(imgYouWin);
 
-    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", youWin);
-    let btnNextLevel = createButton("btnNextLevel", "Next level", youWin);
+    let scoreboard = createDivId("scoreboard", youWin);
+    let starContainer = createDivId("starContainer", scoreboard);
+    let imgStarScore = document.createElement("img");
+    imgStarScore.setAttribute("class", "starScore");
+    imgStarScore.setAttribute("src", "./imgs/star_score.webp");
+    starContainer.appendChild(imgStarScore);
+
+    let imgStarScore2 = document.createElement("img");
+    imgStarScore2.setAttribute("class", "starScore");
+    imgStarScore2.setAttribute("src", "./imgs/star_score.webp");
+    starContainer.appendChild(imgStarScore2);
+
+    let imgStarScore3 = document.createElement("img");
+    imgStarScore3.setAttribute("class", "starScore");
+    imgStarScore3.setAttribute("src", "./imgs/star_score.webp");
+    starContainer.appendChild(imgStarScore3);
+
+    let imgStarScore4 = document.createElement("img");
+    imgStarScore4.setAttribute("class", "starScore");
+    imgStarScore4.setAttribute("src", "./imgs/star_score.webp");
+    starContainer.appendChild(imgStarScore4);
+
+    let imgStarScore5 = document.createElement("img");
+    imgStarScore5.setAttribute("class", "starScore");
+    imgStarScore5.setAttribute("src", "./imgs/star_score.webp");
+    starContainer.appendChild(imgStarScore5);
+
+    
+    let scoreContainer = createDivId("scoreContainer", scoreboard);
+    scoreContainer.innerHTML = level.score;
+
+    let btns = createDivId("btnsEndLevel", youWin)
+    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", btns);
+    let btnNextLevel = createButton("btnNextLevel", "Next level", btns);
 
     btnNextLevel.addEventListener("click", () => {
         openLevel(levels[currentLevelIndex+1]);
@@ -264,17 +304,16 @@ let clickCountScore = 1;
 // let allow = true;
 // let matchingCards = 0;
 
-let calculateScore = () => {
+let calculateScore = (level) => {
     let score = (((minutesLeft * 60) + secondsLeft) / clickCountScore).toFixed(3);
-    return score;
+    level.score = score;
+    console.log(level.score);
 }
 
-let openLevel = (object) => {
-    // console.log(levels.indexOf(object));
-    // console.log(object.level+=1);
-    // console.log(object.level);
-
-    
+let openLevel = (level) => {
+    // console.log(levels.indexOf(level));
+    // console.log(level.level+=1);
+    // console.log(level.level);
 
     clearMain();
     let firstSelectedCard;
@@ -292,20 +331,19 @@ let openLevel = (object) => {
     //     playPauseMusic(gameMusic);
     // })
 
-    currentLevelIndex = levels.indexOf(object);
-    console.log(levels[currentLevelIndex+1].blocked);
-    minutesLeft = object.minutes;
-    secondsLeft = object.seconds;
+    currentLevelIndex = levels.indexOf(level);
+    // console.log(levels[currentLevelIndex+1].blocked);
+    minutesLeft = level.minutes;
+    secondsLeft = level.seconds;
 
     countdown = createDivId("countdown", main);
-    let scoreboard = createDivId("scoreboard", main);
 
     startTimer();
 
-    let gameBoard = createDivId(`boardLevel${object.level}`, main);
+    let gameBoard = createDivId(`boardLevel${level.number}`, main);
     gameBoard.setAttribute("class", "gameBoard");
 
-    let doubledCards = duplicateCards(object.numberOfCards);
+    let doubledCards = duplicateCards(level.numberOfCards);
 
     shuffle(doubledCards);
 
@@ -352,11 +390,10 @@ let openLevel = (object) => {
                         if (window.navigator && window.navigator.vibrate) {
                             setTimeout(function () { window.navigator.vibrate(200); }, 500);
                         }
-                        if (matchingCards == object.numberOfCards) {
+                        if (matchingCards == level.numberOfCards) {
                             clearInterval(timer);
-                            scoreboard.innerHTML = calculateScore();
-                            youWin();
-
+                            calculateScore(level);
+                            youWin(level);
                         }
                     } else {
                         allow = false;
@@ -371,11 +408,10 @@ let openLevel = (object) => {
 }
 
 // instrucoes
-// win score, imagem, estrelas, btn menu e proximo nivel
+// win score, estrelas
 // score local storage
 // bordinha da carta
 // mexer cor botao start
-// botao play/pause
 // alinhar coisas
 // cartas pulando no fim (maozinhas)
 // olhinho piscar
