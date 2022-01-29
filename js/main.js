@@ -89,7 +89,7 @@ function Level(number, numberOfCards, minutes, seconds, blocked) {
 
 let levels = [ 
     new Level(1, 6, 1, 0, false),
-    new Level(2, 10, 0, 5, false),
+    new Level(2, 10, 1, 0, false),
     new Level(3, 14, 0, 10, true),
     new Level(4, 18, 1, 0, true),
     new Level(5, 22, 1, 0, true),
@@ -133,6 +133,21 @@ let openMenu = () => {
 
     let message = createDivId("message", menu);
     message.innerHTML = "Complete levels to unlock new ones";
+    let btnInstructions = createButton("btnInstructions", "Instructions", menu);
+    btnInstructions.addEventListener("click", () => openInstructions());
+}
+
+let openInstructions = () => {
+    clearMain();
+
+    createBtnSound(introMusic);
+
+    let instructions = createDivId("instructions", main);
+
+    instructions.innerHTML = "Instructions test";
+
+    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", instructions);
+    btnLevelsMenu.addEventListener("click", () => openMenu());
 }
 
 const cards = ["./imgs/banana.webp",
@@ -304,10 +319,30 @@ let clickCountScore = 1;
 // let allow = true;
 // let matchingCards = 0;
 
+
 let calculateScore = (level) => {
     let score = (((minutesLeft * 60) + secondsLeft) / clickCountScore).toFixed(3);
-    level.score = score;
-    console.log(level.score);
+    level.score = score;    
+    let scores = {
+        scoreLevel1: levels[0].score,
+        scoreLevel2: levels[1].score,
+        scoreLevel3: levels[2].score,
+        scoreLevel4: levels[3].score,
+        scoreLevel5: levels[4].score,
+        scoreLevel6: levels[5].score,
+        scoreTotal: 0
+    }
+    
+    let savedScores = JSON.parse(localStorage.getItem("scores"));
+    
+    if(!savedScores) {
+        localStorage.setItem("scores", JSON.stringify(scores));
+        
+    } else if (score > Object.values(savedScores)[level.number-1]) {
+        localStorage.setItem("scores", JSON.stringify(scores));
+    }
+    
+    
 }
 
 let openLevel = (level) => {

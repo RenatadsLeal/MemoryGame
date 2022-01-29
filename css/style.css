@@ -104,7 +104,7 @@ main {
     cursor: pointer;
 }
 
-#menu {
+#menu, #instructions {
     background: var(--light-orange);
     width: 90%;
     height: 80%;
@@ -265,7 +265,7 @@ de tudo e nao poder clicar em nada embaixo!!! */
     gap: 0.5rem;
 }
 
-#btnLevelsMenu, #btnTryAgain, #btnNextLevel {
+#btnLevelsMenu, #btnTryAgain, #btnNextLevel , #btnInstructions {
     color: whitesmoke;
     width: 9rem;
     height: 2.7rem;
