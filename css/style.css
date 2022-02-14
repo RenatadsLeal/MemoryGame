@@ -265,7 +265,7 @@ de tudo e nao poder clicar em nada embaixo!!! */
     gap: 0.5rem;
 }
 
-#btnLevelsMenu, #btnTryAgain, #btnNextLevel , #btnInstructions {
+#btnLevelsMenu, #btnTryAgain, #btnNextLevel , #btnInstructions, #btnPlayAgain {
     color: whitesmoke;
     width: 9rem;
     height: 2.7rem;

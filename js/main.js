@@ -90,7 +90,7 @@ function Level(number, numberOfCards, minutes, seconds, blocked) {
 let levels = [ 
     new Level(1, 6, 1, 0, false),
     new Level(2, 10, 1, 0, false),
-    new Level(3, 14, 0, 10, true),
+    new Level(3, 14, 0, 10, false),
     new Level(4, 18, 1, 0, true),
     new Level(5, 22, 1, 0, true),
     new Level(6, 26, 1, 0, true)
@@ -297,32 +297,39 @@ let youWin = (level) => {
     imgStarScore5.setAttribute("class", "starScore");
     imgStarScore5.setAttribute("src", "./imgs/star_score.webp");
     starContainer.appendChild(imgStarScore5);
-
     
     let scoreContainer = createDivId("scoreContainer", scoreboard);
     scoreContainer.innerHTML = level.score;
+   
 
     let btns = createDivId("btnsEndLevel", youWin)
     let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", btns);
     let btnNextLevel = createButton("btnNextLevel", "Next level", btns);
+    let btnPlayAgain = createButton("btnPlayAgain", "Play again", btns);
 
     btnNextLevel.addEventListener("click", () => {
         openLevel(levels[currentLevelIndex+1]);
     });
     btnLevelsMenu.addEventListener("click", () => openMenu());
+
+    btnPlayAgain.addEventListener("click", () => {
+        openLevel(levels[currentLevelIndex]);
+    });
 }
 
 // let firstSelectedCard;
 // let secondSelectedCard;
 // let cardCount = 1;
-let clickCountScore = 1;
 // let allow = true;
 // let matchingCards = 0;
+let clickCountScore;
 
 
 let calculateScore = (level) => {
+
     let score = (((minutesLeft * 60) + secondsLeft) / clickCountScore).toFixed(3);
-    level.score = score;    
+    level.score = score;
+
     let scores = {
         scoreLevel1: levels[0].score,
         scoreLevel2: levels[1].score,
@@ -340,9 +347,7 @@ let calculateScore = (level) => {
         
     } else if (score > Object.values(savedScores)[level.number-1]) {
         localStorage.setItem("scores", JSON.stringify(scores));
-    }
-    
-    
+    }    
 }
 
 let openLevel = (level) => {
@@ -356,7 +361,8 @@ let openLevel = (level) => {
     let cardCount = 1;
     let allow = true;
     let matchingCards = 0;
-
+    clickCountScore = 1;
+    
     introMusic.pause();
     createBtnSound(gameMusic);
 
@@ -440,9 +446,18 @@ let openLevel = (level) => {
             }
         })
     })
+
+    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", main);
+    btnLevelsMenu.addEventListener("click", () => {
+        clearInterval(timer);
+        gameMusic.pause();
+        if (soundPreference) { gameOverSound.play() };
+        openMenu()
+    });
 }
 
 // instrucoes
+// Botão pra cancelar jogo
 // win score, estrelas
 // score local storage
 // bordinha da carta
