@@ -3,6 +3,8 @@ let btnStart = document.querySelector("#btnStart");
 let main = document.querySelector("main");
 let body = document.body;
 
+//   let savedScores = JSON.parse(localStorage.getItem("scores"));
+
 let createDivId = (id, parent) => {
     let levelDiv = document.createElement("div");
     levelDiv.setAttribute("id", id);
@@ -88,13 +90,15 @@ function Level(number, numberOfCards, minutes, seconds, blocked) {
 };
 
 let levels = [ 
-    new Level(1, 6, 1, 0, false),
-    new Level(2, 10, 1, 0, false),
-    new Level(3, 14, 0, 10, false),
-    new Level(4, 18, 1, 0, true),
-    new Level(5, 22, 1, 0, true),
-    new Level(6, 26, 1, 0, true)
+    new Level(1, 6, 3, 0, false),
+    new Level(2, 10, 2, 3, false),
+    new Level(3, 14, 3, 7, false),
+    new Level(4, 18, 5, 19, false),
+    new Level(5, 22, 6, 37, false),
+    new Level(6, 26, 7, 11, false)
 ]
+
+
 
 let createBtnSound = (music) => {
     let btnMusic = createDivId("btnMusic", main);
@@ -108,8 +112,27 @@ let createBtnSound = (music) => {
 }
 
 let createLevels = (level, parent) => {
-    let btnLevel = createDivId(`level${level.number}`, parent);
-    btnLevel.setAttribute("class", "btnLevel");
+    let btnScore = createDivClass("btnScore", parent);
+    // let btnLevel = createDivId(`level${level.number}`, btnScore);
+    // Aparentmente não estávamos usando esse ID
+    let btnLevel = createDivClass("btnLevel", btnScore);
+    let bestScore = createDivClass("bestScore", btnScore);
+
+    let savedScores = localStorage.getItem("scores")
+  ? JSON.parse(localStorage.getItem("scores"))
+  : [];
+
+    if(savedScores) {
+        level.score = (Object.values(savedScores)[level.number - 1]);
+    }
+
+    if(level.score > 0) {
+        bestScore.innerText = level.score;
+    } else {
+        bestScore.innerText = "";
+    }
+
+    // btnLevel.setAttribute("class", "btnLevel");
     btnLevel.innerText = level.number;
     if(!level.blocked) {
         btnLevel.addEventListener("click", () => openLevel(level));
@@ -330,6 +353,8 @@ let calculateScore = (level) => {
     let score = (((minutesLeft * 60) + secondsLeft) / clickCountScore).toFixed(3);
     level.score = score;
 
+   level1 =  2000
+
     let scores = {
         scoreLevel1: levels[0].score,
         scoreLevel2: levels[1].score,
@@ -347,6 +372,7 @@ let calculateScore = (level) => {
         
     } else if (score > Object.values(savedScores)[level.number-1]) {
         localStorage.setItem("scores", JSON.stringify(scores));
+        
     }    
 }
 
@@ -451,15 +477,12 @@ let openLevel = (level) => {
     btnLevelsMenu.addEventListener("click", () => {
         clearInterval(timer);
         gameMusic.pause();
-        if (soundPreference) { gameOverSound.play() };
-        openMenu()
+        openMenu();
     });
 }
 
 // instrucoes
-// Botão pra cancelar jogo
 // win score, estrelas
-// score local storage
 // bordinha da carta
 // mexer cor botao start
 // alinhar coisas

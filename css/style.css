@@ -122,6 +122,7 @@ main {
 }
 
 #btnMusic img {
+    
     width: 1.1rem;
 }
 
@@ -144,6 +145,12 @@ main {
     color: whitesmoke;
 }
 
+.bestScore {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #message {
     text-align: center;
 }
@@ -160,16 +167,19 @@ main {
     justify-content: center;
     row-gap: 0.5rem;
     column-gap: 0.5rem;
+    margin: 0.1rem 0 0.1rem;
 }
 
-/* #boardLevel1 {
+ #boardLevel1 {
     row-gap: 0.5rem;
     column-gap: 0.5rem;
 }
 
 #boardLevel1 > .flipContainer {
-    width: 38%;
+    width: 5rem;
+    height: 5rem;
     perspective: 12rem;
+    /* perspective: 12rem; */
    
 }
 
@@ -179,13 +189,13 @@ main {
     max-width: 8rem;
     max-height: 8rem;
     perspective: 12rem;
-} */
+}
 
-.flipContainer {
+/* .flipContainer {
     width: 5.5rem;
     height: 5.5rem;
     perspective: 12rem;
-}
+} */
 
 .flipper {
     position: relative;
@@ -216,6 +226,7 @@ main {
 .cardFront img {
     width: 3.5rem;
 }
+/* Esse vai ter que ser em porcentagem */
 
 .cardBack {
     background: center / contain no-repeat url(../imgs/card_back.webp);
