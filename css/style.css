@@ -107,7 +107,7 @@ main {
 #menu, #instructions {
     background: var(--light-orange);
     width: 90%;
-    height: 80%;
+    height: 90%;
     /* max-height: 95%; */
     border-radius: 1rem;
     border: 2px solid var(--dark-orange);
@@ -119,10 +119,12 @@ main {
 #btnMusic {
     display: flex;
     cursor: pointer;
+    align-self: flex-end;
+    /* margin-bottom: auto; */
+    margin: 0.5rem 1rem 1rem;
 }
 
 #btnMusic img {
-    
     width: 1.1rem;
 }
 
@@ -158,7 +160,7 @@ main {
 .gameBoard {
     background: var(--light-orange);
     width: 90%;
-    max-height: 90%;
+    height: 90%;
     border-radius: 1rem;
     border: 2px solid var(--dark-orange);
     padding: 1rem;
@@ -167,7 +169,7 @@ main {
     justify-content: center;
     row-gap: 0.5rem;
     column-gap: 0.5rem;
-    margin: 0.1rem 0 0.1rem;
+    /* margin: 0.1rem 0 0.1rem; */
 }
 
  #boardLevel1 {

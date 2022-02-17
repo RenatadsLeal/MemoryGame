@@ -98,8 +98,6 @@ let levels = [
     new Level(6, 26, 7, 11, false)
 ]
 
-
-
 let createBtnSound = (music) => {
     let btnMusic = createDivId("btnMusic", main);
     soundOn = createImage("./imgs/sound_on.webp", "soundOn", btnMusic);
@@ -377,9 +375,6 @@ let calculateScore = (level) => {
 }
 
 let openLevel = (level) => {
-    // console.log(levels.indexOf(level));
-    // console.log(level.level+=1);
-    // console.log(level.level);
 
     clearMain();
     let firstSelectedCard;
