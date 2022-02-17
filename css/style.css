@@ -114,17 +114,31 @@ main {
     padding: 1rem;
     display: grid;
     row-gap: 3rem;
+    margin-top: 0.906rem;
 }
 
-#btnMusic {
+#header {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 1rem 0;
+}
+
+#btnMusic, #goBack {
     display: flex;
     cursor: pointer;
-    align-self: flex-end;
+    /* align-self: flex-end; */
+    align-items: center;
     /* margin-bottom: auto; */
-    margin: 0.5rem 1rem 1rem;
+    /* margin: 0.5rem 1rem 1rem; */
 }
 
 #btnMusic img {
+    width: 1.1rem;
+}
+
+#btnGoBack {
     width: 1.1rem;
 }
 
@@ -209,8 +223,8 @@ main {
 
 .cardFront, .cardBack {
     position: absolute;
-    border-radius: 1rem;
-    border: 1px solid ;
+    border-radius: 0.7rem;
+    border: 1px solid rgb(201, 195, 195);
     width: 100%;
     height: 100%;
     display: flex;

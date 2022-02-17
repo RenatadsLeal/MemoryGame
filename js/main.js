@@ -99,7 +99,8 @@ let levels = [
 ]
 
 let createBtnSound = (music) => {
-    let btnMusic = createDivId("btnMusic", main);
+    let header = createDivId("header", main);
+    let btnMusic = createDivId("btnMusic", header);
     soundOn = createImage("./imgs/sound_on.webp", "soundOn", btnMusic);
     soundOn.style.display = "block";
     soundOff = createImage("./imgs/sound_off.webp", "soundOff", btnMusic);
@@ -386,6 +387,13 @@ let openLevel = (level) => {
     
     introMusic.pause();
     createBtnSound(gameMusic);
+    let goBack = createDivId("goBack", header)
+    let btnGoBack = createImage("./imgs/level_btn.webp", "btnGoBack", goBack);
+    btnGoBack.addEventListener("click", () => {
+        clearInterval(timer);
+        gameMusic.pause();
+        openMenu();
+    });
 
     // verifySoundPreference(gameMusic);
     // let btnMusic = createButton("btnMusic", "play/pause", main);
@@ -468,12 +476,12 @@ let openLevel = (level) => {
         })
     })
 
-    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", main);
-    btnLevelsMenu.addEventListener("click", () => {
-        clearInterval(timer);
-        gameMusic.pause();
-        openMenu();
-    });
+    // let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", main);
+    // btnLevelsMenu.addEventListener("click", () => {
+    //     clearInterval(timer);
+    //     gameMusic.pause();
+    //     openMenu();
+    // });
 }
 
 // instrucoes
