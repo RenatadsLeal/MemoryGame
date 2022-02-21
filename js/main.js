@@ -95,7 +95,7 @@ let levels = [
     new Level(3, 14, 3, 7, false),
     new Level(4, 18, 5, 19, false),
     new Level(5, 22, 6, 37, false),
-    new Level(6, 26, 7, 11, false)
+    new Level(6, 25, 7, 11, false)
 ]
 
 let createBtnSound = (music) => {
