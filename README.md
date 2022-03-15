@@ -1,3 +1,3 @@
-# MemoryGame
+# OhMyMemory
 
 A Memory Game!
