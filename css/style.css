@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Gluten:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700;800&family=Oxygen:wght@300;400;700&display=swap');
 
 * {
     margin: 0;
@@ -13,12 +14,26 @@ html {
 }
 
 :root {
+    --white: whitesmoke;
     --dark-orange: #ffbc66;
     --medium-orange: #f9cc92;
     --light-orange-opacity: #fbefe2d0;
     --light-orange: #fbefe2;
     --light-red: #fa6157;
-    --medium-brown: #9d5651;
+    --medium-red: #dd544a;
+    --dark-red: #a50f04;
+    --btn-dark-green: #89c81c;
+    --btn-medium-green: #a9e132;
+    --btn-light-green: #d6efaa;
+    --btn-dark-purple: #ae76da;
+    --btn-medium-purple: #bd8fe0;
+    --btn-light-purple: #d6c1e6;
+    --btn-light-blue:#c6eff5;
+    --btn-medium-blue:#8adfed;
+    --btn-dark-blue:#67d6e9;
+    --btn-light-red:#f9bcb8;
+    --btn-medium-red:#f7837b;
+    --btn-dark-red:#fa6157;
 }
 
 body {
@@ -28,6 +43,7 @@ body {
     align-items: center;
     font-family: 'Gluten', cursive;
     background: center / cover no-repeat url(../imgs/background.webp);
+    color: var(--dark-red);
 }
 
 main {
@@ -59,7 +75,6 @@ main {
     85% {opacity: 0%}
     100% {opacity: 100%}
 }
-
 
 #logo {
     text-align: center;
@@ -93,15 +108,27 @@ main {
 }
 
 #btnStart {
-    color: whitesmoke;
+    color: var(--white);
     font-size: 1.2rem;
     border-radius: 1rem;
-    border: 2px solid var(--dark-orange);
-    box-shadow: inset 0 0.5rem var(--light-orange), inset 0 -0.5rem var(--dark-orange);
-    background: var(--medium-orange);
+    
+    border: 2px solid var(--light-red);
+    box-shadow: inset 0 0.5rem #f9bcb8, inset 0 -0.5rem var(--light-red);
+    background: #f7837b;
+    
+    /* border: 2px solid var(--dark-orange); */
+    /* border: 2px solid #a9c81c;
+    box-shadow: inset 0 0.5rem #f2fcc4, inset 0 -0.5rem #a9c81c; */
+    /* border: 2px solid var(--btn-dark-blue);
+    box-shadow: inset 0 0.5rem var(--btn-light-blue), inset 0 -0.5rem var(--btn-dark-blue); */
+    /* box-shadow: inset 0 0.5rem var(--light-orange), inset 0 -0.5rem var(--dark-orange); */
+    /* background: var(--btn-medium-blue); */
+    /* background: #c5e245; */
+    /* background: var(--medium-orange); */
     padding: 1rem 3rem;
-    transform: scale(1);
+    /* transform: scale(1); */
     cursor: pointer;
+    margin-top: 1rem;
 }
 
 #menu, #instructions {
@@ -109,6 +136,7 @@ main {
     width: 90%;
     height: 90%;
     /* max-height: 95%; */
+    font-family: 'Nunito', sans-serif;
     border-radius: 1rem;
     border: 2px solid var(--dark-orange);
     padding: 1rem;
@@ -123,7 +151,7 @@ main {
     justify-content: space-between;
     width: 90%;
     position: fixed;
-    top: 0.5rem;
+    top: 0.4rem;
 }
 
 #btnMusic, #goBack {
@@ -159,23 +187,44 @@ main {
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-    color: whitesmoke;
+    color: var(--white);
 }
 
 .bestScore {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 0.5rem;
+    height: 1rem;
+}
+
+.imgEarnedStars {
+    width: 1rem;
+}
+
+.starsWon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1rem;
+}
+
+.starsAcquired {
+    width: 1rem;
 }
 
 #message {
     text-align: center;
+    font-family: 'Nunito';
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--medium-red);
 }
 
 .gameBoard {
     background: var(--light-orange);
-    width: 90%;
-    max-height: 90%;
+    max-width: 93%;
+    max-height: 95%;
     border-radius: 1rem;
     border: 2px solid var(--dark-orange);
     padding: 1rem;
@@ -198,8 +247,8 @@ main {
 }
 
 #boardLevel2 > .flipContainer {
-    width: 4.1rem;
-    height: 4.1rem;
+    width: 5.9rem;
+    height: 5.9rem;
     perspective: 12rem;
 }
 
@@ -222,8 +271,8 @@ main {
 }
 
 #boardLevel6 > .flipContainer {
-    width: 3.2rem;
-    height: 3.2rem;
+    width: 3.9rem;
+    height: 3.8rem;
     perspective: 12rem;
 }
 
@@ -250,7 +299,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: whitesmoke;
+    background: var(--white);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
@@ -313,7 +362,7 @@ de tudo e nao poder clicar em nada embaixo!!! */
 }
 
 #btnLevelsMenu, #btnTryAgain, #btnNextLevel , #btnInstructions, #btnPlayAgain {
-    color: whitesmoke;
+    color: var(--white);
     width: 9rem;
     height: 2.7rem;
     font-size: 0.9rem;
@@ -326,11 +375,126 @@ de tudo e nao poder clicar em nada embaixo!!! */
     cursor: pointer;
 }
 
-@media only screen and (min-width: 1000px) {
-    #levels {
-        grid-template-columns: repeat(3, 1fr);
+#btnInstructions, #btnLevelsMenu {
+    border: 2px solid var(--btn-dark-purple);
+    box-shadow: inset 0 0.5rem var(--btn-light-purple), inset 0 -0.5rem var(--btn-dark-purple);
+    background: var(--btn-medium-purple);
+    justify-self: center;
+}
+
+#btnTryAgain, #btnNextLevel {
+    border: 2px solid var(--btn-dark-green);
+    box-shadow: inset 0 0.5rem var(--btn-light-green), inset 0 -0.5rem var(--btn-dark-green);
+    background: var(--btn-medium-green);
+}
+
+#btnPlayAgain {
+    border: 2px solid var(--btn-dark-red);
+    box-shadow: inset 0 0.5rem var(--btn-light-red), inset 0 -0.5rem var(--btn-dark-red);
+    background: var(--btn-medium-red);
+}
+
+@media only screen and (min-width: 390px) {
+
+    #boardLevel1 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
-    .levelBtn {
-        cursor: pointer;
+
+    #boardLevel1 > .flipContainer {
+        width: 7rem;
+        height: 7rem;
+        perspective: 12rem;
+    }
+
+    #boardLevel1 {
+        row-gap: 0.8rem;
+        column-gap: 0.8rem;
+    }
+}
+
+@media only screen and (min-width: 400px) {
+    #boardLevel1 > .flipContainer {
+        width: 5.3rem;
+        height: 5.3rem;
+        perspective: 12rem;
+    }
+}
+
+@media only screen and (min-width: 760px) {
+    
+
+    #boardLevel1 > .flipContainer {
+        width: 5.3rem;
+        height: 5.3rem;
+        perspective: 12rem;
+    }
+    
+    #boardLevel2 > .flipContainer {
+        width: 5.9rem;
+        height: 5.9rem;
+        perspective: 12rem;
+    }
+    
+    #boardLevel3 > .flipContainer {
+        width: 4.1rem;
+        height: 4.1rem;
+        perspective: 12rem;
+    }
+    
+    #boardLevel4 > .flipContainer {
+        width: 2.7rem;
+        height: 2.7rem;
+        perspective: 12rem;
+    }
+    
+    #boardLevel5 > .flipContainer {
+        width: 3.3rem;
+        height: 3.3rem;
+        perspective: 12rem;
+    }
+    
+    #boardLevel6 > .flipContainer {
+        width: 3.9rem;
+        height: 3.8rem;
+        perspective: 12rem;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    #boardLevel1 > .flipContainer {
+        width: 5.3rem;
+        height: 5.3rem;
+        perspective: 12rem;
+    }
+    
+    #boardLevel2 > .flipContainer {
+        width: 5.9rem;
+        height: 5.9rem;
+        perspective: 12rem;
+    }
+    
+    #boardLevel3 > .flipContainer {
+        width: 4.1rem;
+        height: 4.1rem;
+        perspective: 12rem;
+    }
+    
+    #boardLevel4 > .flipContainer {
+        width: 2.7rem;
+        height: 2.7rem;
+        perspective: 12rem;
+    }
+    
+    #boardLevel5 > .flipContainer {
+        width: 3.3rem;
+        height: 3.3rem;
+        perspective: 12rem;
+    }
+    
+    #boardLevel6 > .flipContainer {
+        width: 3.9rem;
+        height: 3.8rem;
+        perspective: 12rem;
     }
 }

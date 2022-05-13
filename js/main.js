@@ -73,6 +73,7 @@ let verifySoundPreference = (music) => {
 }
 
 btnStart.addEventListener("click", () => {
+    console.log(levels);
 
     clickSound.play();
     openMenu();
@@ -90,13 +91,15 @@ function Level(number, numberOfCards, minutes, seconds, blocked) {
 };
 
 let levels = [ 
-    new Level(1, 6, 3, 0, false),
+    new Level(1, 6, 0, 3, false),
     new Level(2, 10, 2, 3, false),
     new Level(3, 14, 3, 7, false),
     new Level(4, 18, 5, 19, false),
     new Level(5, 22, 6, 37, false),
-    new Level(6, 25, 7, 11, false)
+    new Level(6, 25, 7, 11, true)
 ]
+
+console.log(levels);
 
 let createBtnSound = (music) => {
     let header = createDivId("header", main);
@@ -111,25 +114,82 @@ let createBtnSound = (music) => {
 }
 
 let createLevels = (level, parent) => {
+    console.log(levels);
     let btnScore = createDivClass("btnScore", parent);
     // let btnLevel = createDivId(`level${level.number}`, btnScore);
     // Aparentmente não estávamos usando esse ID
     let btnLevel = createDivClass("btnLevel", btnScore);
     let bestScore = createDivClass("bestScore", btnScore);
+    let starsWon = createDivClass("starsWon", btnScore);
 
-    let savedScores = localStorage.getItem("scores")
-  ? JSON.parse(localStorage.getItem("scores"))
-  : [];
+    
+    // let imgEarnedStars = document.createElement("img");
+    // imgEarnedStars.setAttribute("class", "starScoreMenu");
+    // imgEarnedStars.setAttribute("src", "./imgs/star_score.webp");
+    // bestScore.appendChild(imgEarnedStars);
+
+    // let imgEarnedStars2 = document.createElement("img");
+    // imgEarnedStars2.setAttribute("class", "starScoreMenu");
+    // imgEarnedStars2.setAttribute("src", "./imgs/star_score.webp");
+    // bestScore.appendChild(imgEarnedStars2);
+
+    // let imgEarnedStars3 = document.createElement("img");
+    // imgEarnedStars3.setAttribute("class", "starScoreMenu");
+    // imgEarnedStars3.setAttribute("src", "./imgs/star_score.webp");
+    // bestScore.appendChild(imgEarnedStars3);
+
+    // let imgEarnedStars4 = document.createElement("img");
+    // imgEarnedStars4.setAttribute("class", "starScoreMenu");
+    // imgEarnedStars4.setAttribute("src", "./imgs/star_score.webp");
+    // bestScore.appendChild(imgEarnedStars4);
+
+    // let imgEarnedStars5 = document.createElement("img");
+    // imgEarnedStars5.setAttribute("class", "starScoreMenu");
+    // imgEarnedStars5.setAttribute("src", "./imgs/star_score.webp");
+    // bestScore.appendChild(imgEarnedStars5);
+
+    //daqui
+
+    let savedScores = JSON.parse(localStorage.getItem("scores"));
+    // ? JSON.parse(localStorage.getItem("scores"))
+    // : [];
+
+    // let savedScores = localStorage.getItem("scores")
+    // ? JSON.parse(localStorage.getItem("scores"))
+    // : [];
+
+    let starsAcquired = JSON.parse(localStorage.getItem("stars"));
 
     if(savedScores) {
         level.score = (Object.values(savedScores)[level.number - 1]);
+        level.starsWon = (Object.values(starsAcquired)[level.number - 1]);
+        // console.log(savedScores);
+        // let starsAcquired = `starsWonLevel${level.number}`;
+        // console.log(starsAcquired);
+        // level.starsWon = `savedScores.${starsAcquired}`;
+        // console.log(savedScores.starsWonLevel1);
+        // console.log(level.starsWon);
     }
 
     if(level.score > 0) {
         bestScore.innerText = level.score;
+        for(let i = 0; i < level.starsWon; i++) {
+            let imgStarAcquired = document.createElement("img");
+            imgStarAcquired.setAttribute("class", "starsAcquired");
+            imgStarAcquired.setAttribute("src", "./imgs/star_score.webp");
+            starsWon.appendChild(imgStarAcquired);
+        }
+        // let imgEarnedStars = document.createElement("img");
+        // imgEarnedStars.setAttribute("class", "imgEarnedStars");
+        // imgEarnedStars.setAttribute("src", "./imgs/star_score.webp");
+        // starsWon.appendChild(imgEarnedStars);
+
     } else {
         bestScore.innerText = "";
+        starsWon.innerText = "";
     }
+
+    //ate aqui
 
     // btnLevel.setAttribute("class", "btnLevel");
     btnLevel.innerText = level.number;
@@ -145,6 +205,7 @@ let createLevels = (level, parent) => {
 
 let openMenu = () => {
     clearMain();
+    console.log(levels);
 
     createBtnSound(introMusic);
 
@@ -153,8 +214,8 @@ let openMenu = () => {
 
     for (i = 0; i <= 5; i++) { createLevels(levels[i], btnsLevels) };
 
-    let message = createDivId("message", menu);
-    message.innerHTML = "Complete levels to unlock new ones";
+    // let message = createDivId("message", menu);
+    // message.innerHTML = "Complete levels to unlock new ones";
     let btnInstructions = createButton("btnInstructions", "Instructions", menu);
     btnInstructions.addEventListener("click", () => openInstructions());
 }
@@ -166,7 +227,7 @@ let openInstructions = () => {
 
     let instructions = createDivId("instructions", main);
 
-    instructions.innerHTML = "Instructions test";
+    instructions.innerHTML = "Complete levels to unlock new ones";
 
     let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", instructions);
     btnLevelsMenu.addEventListener("click", () => openMenu());
@@ -295,30 +356,38 @@ let youWin = (level) => {
 
     let scoreboard = createDivId("scoreboard", youWin);
     let starContainer = createDivId("starContainer", scoreboard);
-    let imgStarScore = document.createElement("img");
-    imgStarScore.setAttribute("class", "starScore");
-    imgStarScore.setAttribute("src", "./imgs/star_score.webp");
-    starContainer.appendChild(imgStarScore);
 
-    let imgStarScore2 = document.createElement("img");
-    imgStarScore2.setAttribute("class", "starScore");
-    imgStarScore2.setAttribute("src", "./imgs/star_score.webp");
-    starContainer.appendChild(imgStarScore2);
+    // let imgStarScore = document.createElement("img");
+    // imgStarScore.setAttribute("class", "starScore");
+    // imgStarScore.setAttribute("src", "./imgs/star_score.webp");
+    // starContainer.appendChild(imgStarScore);
 
-    let imgStarScore3 = document.createElement("img");
-    imgStarScore3.setAttribute("class", "starScore");
-    imgStarScore3.setAttribute("src", "./imgs/star_score.webp");
-    starContainer.appendChild(imgStarScore3);
+    for(let i = 0; i < level.starsWon; i++) {
+        let imgStarScore = document.createElement("img");
+        imgStarScore.setAttribute("class", "starScore");
+        imgStarScore.setAttribute("src", "./imgs/star_score.webp");
+        starContainer.appendChild(imgStarScore);
+    }
 
-    let imgStarScore4 = document.createElement("img");
-    imgStarScore4.setAttribute("class", "starScore");
-    imgStarScore4.setAttribute("src", "./imgs/star_score.webp");
-    starContainer.appendChild(imgStarScore4);
+    // let imgStarScore2 = document.createElement("img");
+    // imgStarScore2.setAttribute("class", "starScore");
+    // imgStarScore2.setAttribute("src", "./imgs/star_score.webp");
+    // starContainer.appendChild(imgStarScore2);
 
-    let imgStarScore5 = document.createElement("img");
-    imgStarScore5.setAttribute("class", "starScore");
-    imgStarScore5.setAttribute("src", "./imgs/star_score.webp");
-    starContainer.appendChild(imgStarScore5);
+    // let imgStarScore3 = document.createElement("img");
+    // imgStarScore3.setAttribute("class", "starScore");
+    // imgStarScore3.setAttribute("src", "./imgs/star_score.webp");
+    // starContainer.appendChild(imgStarScore3);
+
+    // let imgStarScore4 = document.createElement("img");
+    // imgStarScore4.setAttribute("class", "starScore");
+    // imgStarScore4.setAttribute("src", "./imgs/star_score.webp");
+    // starContainer.appendChild(imgStarScore4);
+
+    // let imgStarScore5 = document.createElement("img");
+    // imgStarScore5.setAttribute("class", "starScore");
+    // imgStarScore5.setAttribute("src", "./imgs/star_score.webp");
+    // starContainer.appendChild(imgStarScore5);
     
     let scoreContainer = createDivId("scoreContainer", scoreboard);
     scoreContainer.innerHTML = level.score;
@@ -351,6 +420,19 @@ let calculateScore = (level) => {
 
     let score = (((minutesLeft * 60) + secondsLeft) / clickCountScore).toFixed(3);
     level.score = score;
+    console.log(level.score);
+    console.log(score);
+    if (score <= 1.000) {
+        level.starsWon = 1;
+    } else if (score <= 2.000) {
+        level.starsWon = 2;
+    } else if (score <= 3.000) {
+        level.starsWon = 3;
+    } else if (score <= 4.000) {
+        level.starsWon = 4;
+    } else if (score > 4.000) {
+        level.starsWon = 5;
+    }
 
    level1 =  2000
 
@@ -363,15 +445,28 @@ let calculateScore = (level) => {
         scoreLevel6: levels[5].score,
         scoreTotal: 0
     }
+
+
+    let stars = {
+        starsWonLevel1: levels[0].starsWon,
+        starsWonLevel2: levels[1].starsWon,
+        starsWonLevel3: levels[2].starsWon,
+        starsWonLevel4: levels[3].starsWon,
+        starsWonLevel5: levels[4].starsWon,
+        starsWonLevel6: levels[5].starsWon
+    }
     
     let savedScores = JSON.parse(localStorage.getItem("scores"));
     
     if(!savedScores) {
         localStorage.setItem("scores", JSON.stringify(scores));
+        // JSON.parse(localStorage.getItem("stars"));
+        localStorage.setItem("stars", JSON.stringify(stars));
+        
         
     } else if (score > Object.values(savedScores)[level.number-1]) {
         localStorage.setItem("scores", JSON.stringify(scores));
-        
+        localStorage.setItem("stars", JSON.stringify(stars));
     }    
 }
 
