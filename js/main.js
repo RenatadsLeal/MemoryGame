@@ -91,12 +91,12 @@ function Level(number, numberOfCards, minutes, seconds, blocked) {
 };
 
 let levels = [ 
-    new Level(1, 6, 0, 3, false),
-    new Level(2, 10, 2, 3, false),
-    new Level(3, 14, 3, 7, false),
+    new Level(1, 6, 5, 3, false),
+    new Level(2, 10, 5, 3, false),
+    new Level(3, 14, 5, 7, false),
     new Level(4, 18, 5, 19, false),
     new Level(5, 22, 6, 37, false),
-    new Level(6, 25, 7, 11, true)
+    new Level(6, 26, 7, 11, true)
 ]
 
 console.log(levels);
@@ -330,8 +330,8 @@ let gameOver = () => {
     imgGameOver.setAttribute("src", "./imgs/game_over.webp");
     gameOver.appendChild(imgGameOver);
 
-    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", gameOver);
     let btnTryAgain = createButton("btnTryAgain", "Try again", gameOver);
+    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", gameOver);
 
     btnTryAgain.addEventListener("click", () => {
         openLevel(levels[currentLevelIndex]);
@@ -394,9 +394,9 @@ let youWin = (level) => {
    
 
     let btns = createDivId("btnsEndLevel", youWin)
-    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", btns);
     let btnNextLevel = createButton("btnNextLevel", "Next level", btns);
     let btnPlayAgain = createButton("btnPlayAgain", "Play again", btns);
+    let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", btns);
 
     btnNextLevel.addEventListener("click", () => {
         openLevel(levels[currentLevelIndex+1]);
@@ -582,7 +582,6 @@ let openLevel = (level) => {
 // instrucoes
 // win score, estrelas
 // bordinha da carta
-// mexer cor botao start
-// alinhar coisas
-// cartas pulando no fim (maozinhas)
+// mexer cor botao start // Done
+// alinhar coisas - paramos no nivel 3 (finalizado) - comecar no nivel 4
 // olhinho piscar

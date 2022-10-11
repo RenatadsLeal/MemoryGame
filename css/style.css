@@ -22,17 +22,17 @@ html {
     --light-red: #fa6157;
     --medium-red: #dd544a;
     --dark-red: #a50f04;
-    --btn-dark-green: #89c81c;
-    --btn-medium-green: #a9e132;
-    --btn-light-green: #d6efaa;
+    --btn-dark-green: #7cb51a;
+    --btn-medium-green: #99cc2c;
+    --btn-light-green: #c2df83;
     --btn-dark-purple: #ae76da;
     --btn-medium-purple: #bd8fe0;
     --btn-light-purple: #d6c1e6;
     --btn-light-blue:#c6eff5;
     --btn-medium-blue:#8adfed;
     --btn-dark-blue:#67d6e9;
-    --btn-light-red:#f9bcb8;
-    --btn-medium-red:#f7837b;
+    --btn-light-red:#f49f99;
+    --btn-medium-red:#f37b72;
     --btn-dark-red:#fa6157;
 }
 
@@ -111,10 +111,9 @@ main {
     color: var(--white);
     font-size: 1.2rem;
     border-radius: 1rem;
-    
-    border: 2px solid var(--light-red);
-    box-shadow: inset 0 0.5rem #f9bcb8, inset 0 -0.5rem var(--light-red);
-    background: #f7837b;
+    border: 2px solid var(--btn-dark-red);
+    box-shadow: inset 0 0.4rem var(--btn-light-red), inset 0 -0.5rem var(--btn-dark-red);
+    background: var(--btn-medium-red);
     
     /* border: 2px solid var(--dark-orange); */
     /* border: 2px solid #a9c81c;
@@ -240,6 +239,13 @@ main {
     column-gap: 0.4rem;
 }
 
+#boardLevel1 {
+    row-gap: 0.8rem;
+    column-gap: 0.8rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 #boardLevel1 > .flipContainer {
     width: 5.3rem;
     height: 5.3rem;
@@ -247,14 +253,21 @@ main {
 }
 
 #boardLevel2 > .flipContainer {
-    width: 5.9rem;
-    height: 5.9rem;
+    width: 4.2rem;
+    height: 4.2rem;
     perspective: 12rem;
 }
 
+#boardLevel3 {
+    row-gap: 0.5rem;
+    column-gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
 #boardLevel3 > .flipContainer {
-    width: 4.1rem;
-    height: 4.1rem;
+    width: 3.4rem;
+    height: 3.4rem;
     perspective: 12rem;
 }
 
@@ -377,68 +390,100 @@ de tudo e nao poder clicar em nada embaixo!!! */
 
 #btnInstructions, #btnLevelsMenu {
     border: 2px solid var(--btn-dark-purple);
-    box-shadow: inset 0 0.5rem var(--btn-light-purple), inset 0 -0.5rem var(--btn-dark-purple);
+    box-shadow: inset 0 0.3rem var(--btn-light-purple), inset 0 -0.3rem var(--btn-dark-purple);
     background: var(--btn-medium-purple);
     justify-self: center;
 }
 
 #btnTryAgain, #btnNextLevel {
     border: 2px solid var(--btn-dark-green);
-    box-shadow: inset 0 0.5rem var(--btn-light-green), inset 0 -0.5rem var(--btn-dark-green);
+    box-shadow: inset 0 0.3rem var(--btn-light-green), inset 0 -0.3rem var(--btn-dark-green);
     background: var(--btn-medium-green);
 }
 
 #btnPlayAgain {
     border: 2px solid var(--btn-dark-red);
-    box-shadow: inset 0 0.5rem var(--btn-light-red), inset 0 -0.5rem var(--btn-dark-red);
+    box-shadow: inset 0 0.3rem var(--btn-light-red), inset 0 -0.3rem var(--btn-dark-red);
     background: var(--btn-medium-red);
 }
 
-@media only screen and (min-width: 390px) {
-
-    #boardLevel1 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+/* IPhone SE */
+@media only screen and (min-width: 355px) {
+    
+    #boardLevel3 > .flipContainer {
+        width: 4.5rem;
+        height: 4.5rem;
+        perspective: 12rem;
     }
+}
+
+/* IPhone 12 Pro / Pixel5*/
+@media only screen and (min-width: 390px) {
 
     #boardLevel1 > .flipContainer {
         width: 7rem;
         height: 7rem;
         perspective: 12rem;
     }
-
-    #boardLevel1 {
-        row-gap: 0.8rem;
-        column-gap: 0.8rem;
+    
+    #boardLevel2 > .flipContainer {
+        width: 6rem;
+        height: 6rem;
+        perspective: 12rem;
     }
+
 }
 
+/* Surface Duo / Galaxy A51/71 */
 @media only screen and (min-width: 400px) {
+    /* Conferir se ta sendo usado: */
+    #boardLevel1 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
     #boardLevel1 > .flipContainer {
-        width: 5.3rem;
-        height: 5.3rem;
+        width: 6.5rem;
+        height: 6.5rem;
+        perspective: 12rem;
+    }
+
+    #boardLevel2 {
+        row-gap: 0.8rem;
+        column-gap: 0.8rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    #boardLevel2 > .flipContainer {
+        width: 5rem;
+        height: 5rem;
+        perspective: 12rem;
+    }
+
+    #boardLevel3 > .flipContainer {
+        width: 5rem;
+        height: 5rem;
         perspective: 12rem;
     }
 }
 
+/* Ipad Mini/ Ipad Air/ Surface Pro 7 */
 @media only screen and (min-width: 760px) {
-    
-
     #boardLevel1 > .flipContainer {
-        width: 5.3rem;
-        height: 5.3rem;
+        width: 10rem;
+        height: 10rem;
         perspective: 12rem;
     }
     
     #boardLevel2 > .flipContainer {
-        width: 5.9rem;
-        height: 5.9rem;
+        width: 8.5rem;
+        height: 8.5rem;
         perspective: 12rem;
     }
     
     #boardLevel3 > .flipContainer {
-        width: 4.1rem;
-        height: 4.1rem;
+        width: 5rem;
+        height: 5rem;
         perspective: 12rem;
     }
     
@@ -462,21 +507,30 @@ de tudo e nao poder clicar em nada embaixo!!! */
 }
 
 @media only screen and (min-width: 1000px) {
+
     #boardLevel1 > .flipContainer {
-        width: 5.3rem;
-        height: 5.3rem;
+        width: 8rem;
+        height: 8rem;
         perspective: 12rem;
+    }
+
+    #boardLevel2 {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
     
     #boardLevel2 > .flipContainer {
-        width: 5.9rem;
-        height: 5.9rem;
+        width: 7.5rem;
+        height: 7.5rem;
         perspective: 12rem;
+    }
+
+    #boardLevel3 {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     }
     
     #boardLevel3 > .flipContainer {
-        width: 4.1rem;
-        height: 4.1rem;
+        width: 7rem;
+        height: 7rem;
         perspective: 12rem;
     }
     
