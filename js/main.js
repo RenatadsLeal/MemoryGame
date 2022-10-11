@@ -583,5 +583,5 @@ let openLevel = (level) => {
 // win score, estrelas
 // bordinha da carta
 // mexer cor botao start // Done
-// alinhar coisas - paramos no nivel 3 (finalizado) - comecar no nivel 4
+// alinhar coisas - paramos no nivel 3 (finalizado) - começar no nivel 4
 // olhinho piscar
