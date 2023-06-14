@@ -90,13 +90,13 @@ function Level(number, numberOfCards, minutes, seconds, blocked) {
     this.starsWon = 0;
 };
 
-let levels = [ 
+let levels = [
     new Level(1, 6, 5, 3, false),
     new Level(2, 10, 5, 3, false),
     new Level(3, 14, 5, 7, false),
     new Level(4, 18, 5, 19, false),
     new Level(5, 22, 6, 37, false),
-    new Level(6, 26, 7, 11, true)
+    new Level(6, 26, 7, 11, false)
 ]
 
 console.log(levels);
@@ -122,7 +122,7 @@ let createLevels = (level, parent) => {
     let bestScore = createDivClass("bestScore", btnScore);
     let starsWon = createDivClass("starsWon", btnScore);
 
-    
+
     // let imgEarnedStars = document.createElement("img");
     // imgEarnedStars.setAttribute("class", "starScoreMenu");
     // imgEarnedStars.setAttribute("src", "./imgs/star_score.webp");
@@ -160,7 +160,7 @@ let createLevels = (level, parent) => {
 
     let starsAcquired = JSON.parse(localStorage.getItem("stars"));
 
-    if(savedScores) {
+    if (savedScores) {
         level.score = (Object.values(savedScores)[level.number - 1]);
         level.starsWon = (Object.values(starsAcquired)[level.number - 1]);
         // console.log(savedScores);
@@ -171,9 +171,9 @@ let createLevels = (level, parent) => {
         // console.log(level.starsWon);
     }
 
-    if(level.score > 0) {
+    if (level.score > 0) {
         bestScore.innerText = level.score;
-        for(let i = 0; i < level.starsWon; i++) {
+        for (let i = 0; i < level.starsWon; i++) {
             let imgStarAcquired = document.createElement("img");
             imgStarAcquired.setAttribute("class", "starsAcquired");
             imgStarAcquired.setAttribute("src", "./imgs/star_score.webp");
@@ -193,7 +193,7 @@ let createLevels = (level, parent) => {
 
     // btnLevel.setAttribute("class", "btnLevel");
     btnLevel.innerText = level.number;
-    if(!level.blocked) {
+    if (!level.blocked) {
         btnLevel.addEventListener("click", () => openLevel(level));
         btnLevel.style.opacity = "1";
         btnLevel.style.cursor = "pointer";
@@ -344,9 +344,9 @@ let youWin = (level) => {
     if (soundPreference) { gameOverSound.play() };
     // verifySoundPreference(gameOverSound);
 
-    levels[currentLevelIndex+1].blocked = false;
+    levels[currentLevelIndex + 1].blocked = false;
     // console.log(levels[currentLevelIndex+1].blocked);
-    
+
     let opaqueBackground = createDivId("opaqueBackground", main);
     let youWin = createDivId("youWin", opaqueBackground);
     let imgYouWin = document.createElement("img");
@@ -362,7 +362,7 @@ let youWin = (level) => {
     // imgStarScore.setAttribute("src", "./imgs/star_score.webp");
     // starContainer.appendChild(imgStarScore);
 
-    for(let i = 0; i < level.starsWon; i++) {
+    for (let i = 0; i < level.starsWon; i++) {
         let imgStarScore = document.createElement("img");
         imgStarScore.setAttribute("class", "starScore");
         imgStarScore.setAttribute("src", "./imgs/star_score.webp");
@@ -388,10 +388,10 @@ let youWin = (level) => {
     // imgStarScore5.setAttribute("class", "starScore");
     // imgStarScore5.setAttribute("src", "./imgs/star_score.webp");
     // starContainer.appendChild(imgStarScore5);
-    
+
     let scoreContainer = createDivId("scoreContainer", scoreboard);
     scoreContainer.innerHTML = level.score;
-   
+
 
     let btns = createDivId("btnsEndLevel", youWin)
     let btnNextLevel = createButton("btnNextLevel", "Next level", btns);
@@ -399,7 +399,7 @@ let youWin = (level) => {
     let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", btns);
 
     btnNextLevel.addEventListener("click", () => {
-        openLevel(levels[currentLevelIndex+1]);
+        openLevel(levels[currentLevelIndex + 1]);
     });
     btnLevelsMenu.addEventListener("click", () => openMenu());
 
@@ -434,7 +434,8 @@ let calculateScore = (level) => {
         level.starsWon = 5;
     }
 
-   level1 =  2000
+    // Parece que isso não está sendo usado, culpa da Carol
+    //    level1 =  2000
 
     let scores = {
         scoreLevel1: levels[0].score,
@@ -455,19 +456,16 @@ let calculateScore = (level) => {
         starsWonLevel5: levels[4].starsWon,
         starsWonLevel6: levels[5].starsWon
     }
-    
+
     let savedScores = JSON.parse(localStorage.getItem("scores"));
-    
-    if(!savedScores) {
-        localStorage.setItem("scores", JSON.stringify(scores));
-        // JSON.parse(localStorage.getItem("stars"));
-        localStorage.setItem("stars", JSON.stringify(stars));
-        
-        
-    } else if (score > Object.values(savedScores)[level.number-1]) {
+
+    if (!savedScores) {
         localStorage.setItem("scores", JSON.stringify(scores));
         localStorage.setItem("stars", JSON.stringify(stars));
-    }    
+    } else if (score > Object.values(savedScores)[level.number - 1]) {
+        localStorage.setItem("scores", JSON.stringify(scores));
+        localStorage.setItem("stars", JSON.stringify(stars));
+    }
 }
 
 let openLevel = (level) => {
@@ -479,7 +477,7 @@ let openLevel = (level) => {
     let allow = true;
     let matchingCards = 0;
     clickCountScore = 1;
-    
+
     introMusic.pause();
     createBtnSound(gameMusic);
     let goBack = createDivId("goBack", header)
@@ -497,7 +495,6 @@ let openLevel = (level) => {
     // })
 
     currentLevelIndex = levels.indexOf(level);
-    // console.log(levels[currentLevelIndex+1].blocked);
     minutesLeft = level.minutes;
     secondsLeft = level.seconds;
 
@@ -546,7 +543,7 @@ let openLevel = (level) => {
                     card.style.transform = "rotateY(180deg)";
                     secondSelectedCard = card;
                     clickCountScore++;
-                    
+
                     if (firstSelectedCard.innerHTML == secondSelectedCard.innerHTML) {
                         cardCount = 1;
                         matchingCards++;
@@ -570,18 +567,11 @@ let openLevel = (level) => {
             }
         })
     })
-
-    // let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", main);
-    // btnLevelsMenu.addEventListener("click", () => {
-    //     clearInterval(timer);
-    //     gameMusic.pause();
-    //     openMenu();
-    // });
 }
 
 // instrucoes
 // win score, estrelas
 // bordinha da carta
-// mexer cor botao start // Done
-// alinhar coisas - paramos no nivel 3 (finalizado) - começar no nivel 4
+// alinhar coisas - paramos no nivel 6 (finalizado) -> só o tamanho das cartas
+// Para os níveis estamos focando no tamanho dos cards primeiro, só depois vamos ajustar o tamanho das imagens (.cardFront)
 // olhinho piscar
