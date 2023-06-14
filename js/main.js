@@ -575,3 +575,9 @@ let openLevel = (level) => {
 // alinhar coisas - paramos no nivel 6 (finalizado) -> só o tamanho das cartas
 // Para os níveis estamos focando no tamanho dos cards primeiro, só depois vamos ajustar o tamanho das imagens (.cardFront)
 // olhinho piscar
+
+// git commit -m "co authored test
+// >
+// >
+// Co-authored-by: Helena Perdigueiro <helenaperdigueiro@users.noreply.github.com>
+// Co-authored-by: Carolina Hakamada <hakacarol@users.noreply.github.com>"
