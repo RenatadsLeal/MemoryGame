@@ -580,4 +580,4 @@ let openLevel = (level) => {
 // >
 // >
 // Co-authored-by: Helena Perdigueiro <helenaperdigueiro@users.noreply.github.com>
-// Co-authored-by: Carolina Hakamada <hakacarol@users.noreply.github.com>"
+// Co-authored-by: Carolina Hakamada <hakacarol@users.noreply.github.com>" --no-verify
