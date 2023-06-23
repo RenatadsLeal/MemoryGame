@@ -422,6 +422,9 @@ de tudo e nao poder clicar em nada embaixo!!! */
 
 /* IPhone 12 Pro / Pixel5*/
 @media only screen and (min-width: 390px) {
+    #menu, #instructions {
+        height: 80%;
+    }
 
     #boardLevel1 > .flipContainer {
         width: 7rem;
@@ -456,6 +459,10 @@ de tudo e nao poder clicar em nada embaixo!!! */
 
 /* Surface Duo / Galaxy A51/71 / Iphone XR */
 @media only screen and (min-width: 400px) {
+    #menu, #instructions {
+        width: 90%;
+        height: 70%;
+    }
     /* Conferir se ta sendo usado: */
     #boardLevel1 {
         grid-template-columns: 1fr 1fr 1fr;
@@ -507,6 +514,11 @@ de tudo e nao poder clicar em nada embaixo!!! */
 
 /* Ipad Mini/ Ipad Air/ Surface Pro 7 */
 @media only screen and (min-width: 760px) {
+    #menu, #instructions {
+        width: 60%;
+        height: 60%;
+    }    
+
     #boardLevel1 > .flipContainer {
         width: 10rem;
         height: 10rem;
@@ -552,6 +564,11 @@ de tudo e nao poder clicar em nada embaixo!!! */
 }
 
 @media only screen and (min-width: 1000px) {
+    #menu, #instructions {
+        width: 30%;
+        height: 65%;
+        padding-top: 3rem;
+    }
 
     #boardLevel1 > .flipContainer {
         width: 8rem;
