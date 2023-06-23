@@ -454,7 +454,7 @@ de tudo e nao poder clicar em nada embaixo!!! */
     }
 }
 
-/* Surface Duo / Galaxy A51/71 */
+/* Surface Duo / Galaxy A51/71 / Iphone XR */
 @media only screen and (min-width: 400px) {
     /* Conferir se ta sendo usado: */
     #boardLevel1 {
@@ -483,6 +483,12 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel3 > .flipContainer {
         width: 5rem;
         height: 5rem;
+        perspective: 12rem;
+    }
+
+    #boardLevel4 > .flipContainer {
+        width: 4.2rem;
+        height: 4.2rem;
         perspective: 12rem;
     }
 
