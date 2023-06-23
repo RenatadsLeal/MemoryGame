@@ -487,8 +487,8 @@ de tudo e nao poder clicar em nada embaixo!!! */
     }
 
     #boardLevel4 > .flipContainer {
-        width: 4.2rem;
-        height: 4.2rem;
+        width: 4rem;
+        height: 4rem;
         perspective: 12rem;
     }
 
@@ -499,8 +499,8 @@ de tudo e nao poder clicar em nada embaixo!!! */
     }
 
     #boardLevel6 > .flipContainer {
-        width: 2.8rem;
-        height: 2.8rem;
+        width: 2.7rem;
+        height: 2.7rem;
         perspective: 12rem;
     }
 }
