@@ -573,6 +573,8 @@ let openLevel = (level) => {
 // win score, estrelas
 // bordinha da carta
 // alinhar coisas - paramos no nivel 6 (finalizado) -> só o tamanho das cartas
+// finalizou o alinhamento do menu em todos os tamanhos
+// PROXIMO - ajustar o tamanho das imagens das cartas
 // Para os níveis estamos focando no tamanho dos cards primeiro, só depois vamos ajustar o tamanho das imagens (.cardFront)
 // olhinho piscar
 
