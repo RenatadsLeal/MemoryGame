@@ -3,8 +3,6 @@ let btnStart = document.querySelector("#btnStart");
 let main = document.querySelector("main");
 let body = document.body;
 
-//   let savedScores = JSON.parse(localStorage.getItem("scores"));
-
 let createDivId = (id, parent) => {
     let levelDiv = document.createElement("div");
     levelDiv.setAttribute("id", id);
@@ -73,8 +71,6 @@ let verifySoundPreference = (music) => {
 }
 
 btnStart.addEventListener("click", () => {
-    console.log(levels);
-
     clickSound.play();
     openMenu();
 })
@@ -91,15 +87,13 @@ function Level(number, numberOfCards, minutes, seconds, blocked) {
 };
 
 let levels = [
-    new Level(1, 6, 5, 3, false),
-    new Level(2, 10, 5, 3, false),
-    new Level(3, 14, 5, 7, false),
-    new Level(4, 18, 5, 19, false),
-    new Level(5, 22, 6, 37, false),
-    new Level(6, 26, 7, 11, false)
+    new Level(1, 6, 15, 3, false),
+    new Level(2, 10, 15, 3, false),
+    new Level(3, 14, 15, 7, false),
+    new Level(4, 18, 15, 19, false),
+    new Level(5, 22, 116, 37, false),
+    new Level(6, 26, 117, 11, false)
 ]
-
-console.log(levels);
 
 let createBtnSound = (music) => {
     let header = createDivId("header", main);
@@ -114,7 +108,6 @@ let createBtnSound = (music) => {
 }
 
 let createLevels = (level, parent) => {
-    console.log(levels);
     let btnScore = createDivClass("btnScore", parent);
     // let btnLevel = createDivId(`level${level.number}`, btnScore);
     // Aparentmente não estávamos usando esse ID
@@ -205,8 +198,6 @@ let createLevels = (level, parent) => {
 
 let openMenu = () => {
     clearMain();
-    console.log(levels);
-
     createBtnSound(introMusic);
 
     let menu = createDivId("menu", main);
@@ -420,8 +411,8 @@ let calculateScore = (level) => {
 
     let score = (((minutesLeft * 60) + secondsLeft) / clickCountScore).toFixed(3);
     level.score = score;
-    console.log(level.score);
-    console.log(score);
+    console.log("Level score: ", level.score);
+    console.log("Score: ", score);
     if (score <= 1.000) {
         level.starsWon = 1;
     } else if (score <= 2.000) {
@@ -458,6 +449,13 @@ let calculateScore = (level) => {
     }
 
     let savedScores = JSON.parse(localStorage.getItem("scores"));
+    // adicionado somente para teste
+    console.log("Saved scored: ", savedScores)
+    let objectValues = Object.values(savedScores)
+    console.log("Object: ", objectValues)
+    let values = Object.values(savedScores)[level.number - 1]
+    console.log("Values: ", values)
+    // adicionado somente para teste
 
     if (!savedScores) {
         localStorage.setItem("scores", JSON.stringify(scores));
@@ -522,9 +520,9 @@ let openLevel = (level) => {
     }
 
     cards.forEach(card => {
+        // card.style.transform = "rotateY(180deg)"; // para deixar cartas para cima
         card.addEventListener("click", () => {
             if (allow && card.classList.contains("faceDown")) {
-
 
                 if (cardCount == 1) {
                     card.style.transform = "rotateY(180deg)";
@@ -572,11 +570,13 @@ let openLevel = (level) => {
 // instrucoes
 // win score, estrelas
 // bordinha da carta
-// alinhar coisas - paramos no nivel 6 (finalizado) -> só o tamanho das cartas
-// finalizou o alinhamento do menu em todos os tamanhos
-// PROXIMO - ajustar o tamanho das imagens das cartas
-// Para os níveis estamos focando no tamanho dos cards primeiro, só depois vamos ajustar o tamanho das imagens (.cardFront)
+// alinhar coisas - paramos no nivel 6 (finalizado) -> só o tamanho das cartas - DONE
+// finalizou o alinhamento do menu em todos os tamanhos - DONE
+// PROXIMO - ajustar o tamanho das imagens das cartas - DONE
 // olhinho piscar
+// Checar pontuação mais alta que não está sobrescrevendo - WIP
+// Fazer botão da casinha e de voltar - Carol
+// Música pra quando ganha
 
 // git commit -m "resized card size on level 4
 

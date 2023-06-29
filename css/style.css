@@ -195,6 +195,10 @@ main {
     color: var(--medium-red);
 }
 
+#countdown {
+    font-size: 1.5rem;
+}
+
 .gameBoard {
     background: var(--light-orange);
     max-width: 93%;
@@ -300,7 +304,8 @@ main {
 }
 
 .cardFront img {
-    width: 3.5rem;
+    /* width: 3.5rem; */
+    width: 75%;
 }
 /* Esse vai ter que ser em porcentagem */
 
@@ -426,6 +431,10 @@ de tudo e nao poder clicar em nada embaixo!!! */
         height: 80%;
     }
 
+    /* .cardFront img {
+        width: 4.7rem;
+    } */
+
     #boardLevel1 > .flipContainer {
         width: 7rem;
         height: 7rem;
@@ -517,7 +526,11 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #menu, #instructions {
         width: 60%;
         height: 60%;
-    }    
+    }
+
+    /* .cardFront img {
+        width: 6.5rem;
+    } */
 
     #boardLevel1 > .flipContainer {
         width: 10rem;
@@ -569,6 +582,10 @@ de tudo e nao poder clicar em nada embaixo!!! */
         height: 65%;
         padding-top: 3rem;
     }
+
+    /* .cardFront img {
+        width: 5.3rem;
+    } */
 
     #boardLevel1 > .flipContainer {
         width: 8rem;
