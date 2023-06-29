@@ -578,7 +578,7 @@ let openLevel = (level) => {
 // Fazer botão da casinha e de voltar - Carol
 // Música pra quando ganha
 
-// git commit -m "resized card size on level 4
+// git commit -m "adjusted cards images size and countdown
 
 
 // Co-authored-by: Helena Perdigueiro <helenaperdigueiro@users.noreply.github.com>
