@@ -88,11 +88,11 @@ function Level(number, numberOfCards, minutes, seconds, blocked) {
 
 let levels = [
     new Level(1, 6, 15, 3, false),
-    new Level(2, 10, 15, 3, false),
-    new Level(3, 14, 15, 7, false),
+    new Level(2, 10, 5, 3, false),
+    new Level(3, 14, 5, 7, false),
     new Level(4, 18, 15, 19, false),
     new Level(5, 22, 116, 37, false),
-    new Level(6, 26, 117, 11, false)
+    new Level(6, 25, 117, 11, false)
 ]
 
 let createBtnSound = (music) => {
@@ -247,7 +247,7 @@ const cards = ["./imgs/banana.webp",
     "./imgs/hazelnut.webp",
     "./imgs/cactus.webp",
     "./imgs/soda.webp",
-    "./imgs/hamburger.webp",
+    // "./imgs/hamburger.webp",
     "./imgs/fries.webp",
     "./imgs/hot_dog.webp"];
 
@@ -406,13 +406,10 @@ let youWin = (level) => {
 // let matchingCards = 0;
 let clickCountScore;
 
-
 let calculateScore = (level) => {
 
     let score = (((minutesLeft * 60) + secondsLeft) / clickCountScore).toFixed(3);
     level.score = score;
-    console.log("Level score: ", level.score);
-    console.log("Score: ", score);
     if (score <= 1.000) {
         level.starsWon = 1;
     } else if (score <= 2.000) {
@@ -438,7 +435,6 @@ let calculateScore = (level) => {
         scoreTotal: 0
     }
 
-
     let stars = {
         starsWonLevel1: levels[0].starsWon,
         starsWonLevel2: levels[1].starsWon,
@@ -449,18 +445,11 @@ let calculateScore = (level) => {
     }
 
     let savedScores = JSON.parse(localStorage.getItem("scores"));
-    // adicionado somente para teste
-    console.log("Saved scored: ", savedScores)
-    let objectValues = Object.values(savedScores)
-    console.log("Object: ", objectValues)
-    let values = Object.values(savedScores)[level.number - 1]
-    console.log("Values: ", values)
-    // adicionado somente para teste
 
     if (!savedScores) {
         localStorage.setItem("scores", JSON.stringify(scores));
         localStorage.setItem("stars", JSON.stringify(stars));
-    } else if (score > Object.values(savedScores)[level.number - 1]) {
+    } else if (parseFloat(score) > parseFloat(Object.values(savedScores)[level.number - 1])) {
         localStorage.setItem("scores", JSON.stringify(scores));
         localStorage.setItem("stars", JSON.stringify(stars));
     }
@@ -574,11 +563,16 @@ let openLevel = (level) => {
 // finalizou o alinhamento do menu em todos os tamanhos - DONE
 // PROXIMO - ajustar o tamanho das imagens das cartas - DONE
 // olhinho piscar
-// Checar pontuação mais alta que não está sobrescrevendo - WIP
+// Checar pontuação mais alta que não está sobrescrevendo - DONE
 // Fazer botão da casinha e de voltar - Carol
-// Música pra quando ganha
+// Arredondar as pontas das estrelas - Carol
+// Música pra quando ganha - Helena
+// level 6 - hoje 50 cartas - 5x10
+// level 6 - 50 cartas - 5x10
+// level 6 - 48 cartas - 6x8
+// Voltar para Home
 
-// git commit -m "adjusted cards images size and countdown
+// git commit -m "adjusted score type and level 6 card amount
 
 
 // Co-authored-by: Helena Perdigueiro <helenaperdigueiro@users.noreply.github.com>
