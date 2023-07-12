@@ -1,7 +1,4 @@
-let logo = document.querySelector("#logo");
-let btnStart = document.querySelector("#btnStart");
 let main = document.querySelector("main");
-let body = document.body;
 
 let createDivId = (id, parent) => {
     let levelDiv = document.createElement("div");
@@ -53,6 +50,7 @@ let playMusic = (music) => {
     soundOn.style.display = "block";
     soundOff.style.display = "none";
 }
+
 let pauseMusic = (music) => {
     music.pause();
     soundPreference = false;
@@ -69,11 +67,6 @@ let verifySoundPreference = (music) => {
     if (soundPreference) { playMusic(music) }
     else { pauseMusic(music) }
 }
-
-btnStart.addEventListener("click", () => {
-    clickSound.play();
-    openMenu();
-})
 
 function Level(number, numberOfCards, minutes, seconds, blocked) {
     this.number = number;
@@ -200,6 +193,10 @@ let openMenu = () => {
     clearMain();
     createBtnSound(introMusic);
 
+    let goBack = createDivId("goBack", header)
+    let btnGoBack = createImage("./imgs/level_btn.webp", "btnGoBack", goBack);
+    btnGoBack.addEventListener("click", () => openHome());
+
     let menu = createDivId("menu", main);
     let btnsLevels = createDivId("btnsLevels", menu);
 
@@ -209,6 +206,26 @@ let openMenu = () => {
     // message.innerHTML = "Complete levels to unlock new ones";
     let btnInstructions = createButton("btnInstructions", "Instructions", menu);
     btnInstructions.addEventListener("click", () => openInstructions());
+
+}
+
+let openHome = () => {
+    clearMain();
+    introMusic.pause();
+
+    let logo2 = createDivId("logo", main)
+    let ohMy2 = createDivId("ohMy", logo2)
+    let memory2 = createDivId("memory", logo2)
+
+    createImage("./imgs/oh.webp", "oh", ohMy2)
+    createImage("./imgs/my.webp", "oh", ohMy2)
+    createImage("./imgs/memory_fruits.webp", "", memory2)
+
+    let btnStart2 = createButton("btnStart", "START", main);
+    btnStart2.addEventListener("click", () => {
+        clickSound.play();
+        openMenu();
+    });
 }
 
 let openInstructions = () => {
@@ -556,6 +573,8 @@ let openLevel = (level) => {
     })
 }
 
+document.addEventListener("DOMContentLoaded", openHome())
+
 // instrucoes
 // win score, estrelas
 // bordinha da carta
@@ -571,8 +590,10 @@ let openLevel = (level) => {
 // level 6 - 50 cartas - 5x10
 // level 6 - 48 cartas - 6x8
 // Voltar para Home
+// mutar/desligar o som do botão start
+// trocar o let para const
 
-// git commit -m "adjusted score type and level 6 card amount
+// git commit -m "adjusted level 6 card size and created home
 
 
 // Co-authored-by: Helena Perdigueiro <helenaperdigueiro@users.noreply.github.com>
