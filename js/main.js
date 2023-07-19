@@ -80,12 +80,12 @@ function Level(number, numberOfCards, minutes, seconds, blocked) {
 };
 
 let levels = [
-    new Level(1, 6, 15, 3, false),
-    new Level(2, 10, 5, 3, false),
-    new Level(3, 14, 5, 7, false),
-    new Level(4, 18, 15, 19, false),
-    new Level(5, 22, 116, 37, false),
-    new Level(6, 25, 117, 11, false)
+    new Level(1, 6, 2, 0, false),
+    new Level(2, 10, 3, 0, false),
+    new Level(3, 14, 4, 0, false),
+    new Level(4, 18, 5, 0, false),
+    new Level(5, 22, 6, 0, false),
+    new Level(6, 25, 7, 0, false)
 ]
 
 let createBtnSound = (music) => {
@@ -223,7 +223,7 @@ let openHome = () => {
 
     let btnStart2 = createButton("btnStart", "START", main);
     btnStart2.addEventListener("click", () => {
-        clickSound.play();
+        soundPreference && clickSound.play();
         openMenu();
     });
 }
@@ -352,8 +352,11 @@ let youWin = (level) => {
     if (soundPreference) { gameOverSound.play() };
     // verifySoundPreference(gameOverSound);
 
-    levels[currentLevelIndex + 1].blocked = false;
-    // console.log(levels[currentLevelIndex+1].blocked);
+    const maxLevelIndex = levels.length - 1;
+
+    if (currentLevelIndex < maxLevelIndex) {
+        levels[currentLevelIndex + 1].blocked = false;
+    }
 
     let opaqueBackground = createDivId("opaqueBackground", main);
     let youWin = createDivId("youWin", opaqueBackground);
@@ -424,8 +427,8 @@ let youWin = (level) => {
 let clickCountScore;
 
 let calculateScore = (level) => {
-
-    let score = (((minutesLeft * 60) + secondsLeft) / clickCountScore).toFixed(3);
+    const clickRate = clickCountScore / level.numberOfCards;
+    let score = (((minutesLeft * 60) + secondsLeft) / clickRate).toFixed(3);
     level.score = score;
     if (score <= 1.000) {
         level.starsWon = 1;
@@ -576,7 +579,7 @@ let openLevel = (level) => {
 document.addEventListener("DOMContentLoaded", openHome())
 
 // instrucoes
-// win score, estrelas
+// win score, estrelas - DONE
 // bordinha da carta
 // alinhar coisas - paramos no nivel 6 (finalizado) -> só o tamanho das cartas - DONE
 // finalizou o alinhamento do menu em todos os tamanhos - DONE
@@ -589,11 +592,14 @@ document.addEventListener("DOMContentLoaded", openHome())
 // level 6 - hoje 50 cartas - 5x10
 // level 6 - 50 cartas - 5x10
 // level 6 - 48 cartas - 6x8
-// Voltar para Home
-// mutar/desligar o som do botão start
+// Voltar para Home - DONE
+// mutar/desligar o som do botão start - DONE
 // trocar o let para const
+// Criar uma imagem única do nosso logo para o Read me - Carol
+// estrelas cinzas, estralas não ganhadas
+// máximo de esforço + uma folguinha = 5 estrelas
 
-// git commit -m "adjusted level 6 card size and created home
+// git commit -m "adjusted level 6 cards, sound preference on start btn, fixed blocked level 6 bug
 
 
 // Co-authored-by: Helena Perdigueiro <helenaperdigueiro@users.noreply.github.com>

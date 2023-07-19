@@ -396,7 +396,6 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel3 > .flipContainer {
         width: 4.5rem;
         height: 4.5rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel4 {
@@ -409,19 +408,16 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel4 > .flipContainer {
         width: 3.6rem;
         height: 3.6rem;
-        /* perspective: 12rem; */
     }
     
     #boardLevel5 > .flipContainer {
         width: 3rem;
         height: 3rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel6 > .flipContainer {
         width: 3.2rem;
         height: 3.2rem;
-        /* perspective: 12rem; */
     }
 }
 
@@ -438,31 +434,26 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel1 > .flipContainer {
         width: 7rem;
         height: 7rem;
-        /* perspective: 12rem; */
     }
     
     #boardLevel2 > .flipContainer {
         width: 6rem;
         height: 6rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel4 > .flipContainer {
         width: 4.7rem;
         height: 4.7rem;
-        /*perspective: 12rem; */
     }
 
     #boardLevel5 > .flipContainer {
         width: 3.9rem;
         height: 3.9rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel6 > .flipContainer {
         width: 3.8rem;
         height: 3.8rem;
-        /* perspective: 12rem; */
     }
 }
 
@@ -480,7 +471,6 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel1 > .flipContainer {
         width: 6.5rem;
         height: 6.5rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel2 {
@@ -493,31 +483,26 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel2 > .flipContainer {
         width: 5rem;
         height: 5rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel3 > .flipContainer {
         width: 5rem;
         height: 5rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel4 > .flipContainer {
         width: 4rem;
         height: 4rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel5 > .flipContainer {
         width: 3.3rem;
         height: 3.3rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel6 > .flipContainer {
-        width: 3.8rem;
-        height: 3.8rem;
-        /* perspective: 12rem; */
+        width: 3.6rem;
+        height: 3.6rem;
     }
 }
 
@@ -535,19 +520,16 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel1 > .flipContainer {
         width: 10rem;
         height: 10rem;
-        /* perspective: 12rem; */
     }
     
     #boardLevel2 > .flipContainer {
         width: 8.5rem;
         height: 8.5rem;
-        /* perspective: 12rem; */
     }
     
     #boardLevel3 > .flipContainer {
         width: 5rem;
         height: 5rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel4 {
@@ -560,19 +542,16 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel4 > .flipContainer {
         width: 6.7rem;
         height: 6.7rem;
-        /* perspective: 12rem; */
     }
     
     #boardLevel5 > .flipContainer {
         width: 5rem;
         height: 5rem;
-        /* perspective: 12rem; */
     }
     
     #boardLevel6 > .flipContainer {
         width: 5.5rem;
         height: 5.5rem;
-        /* perspective: 12rem; */
     }
 }
 
@@ -590,7 +569,6 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel1 > .flipContainer {
         width: 8rem;
         height: 8rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel2 {
@@ -600,7 +578,6 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel2 > .flipContainer {
         width: 7.5rem;
         height: 7.5rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel3 {
@@ -610,13 +587,11 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel3 > .flipContainer {
         width: 7rem;
         height: 7rem;
-        /* perspective: 12rem; */
     }
     
     #boardLevel4 > .flipContainer {
         width: 7rem;
         height: 7rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel5 {
@@ -626,14 +601,9 @@ de tudo e nao poder clicar em nada embaixo!!! */
     #boardLevel5 > .flipContainer {
         width: 5.2rem;
         height: 5.2rem;
-        /* perspective: 12rem; */
     }
 
     #boardLevel6 {
         grid-template-columns: repeat(10, 1fr);
-    }
-    
-    #boardLevel6 > .flipContainer {
-        /* perspective: 12rem; */
     }
 }
