@@ -421,7 +421,7 @@ de tudo e nao poder clicar em nada embaixo!!! */
     }
 }
 
-/* IPhone 12 Pro / Pixel5*/
+/* IPhone 12 Pro / Pixel5 / iPhone 13 */
 @media only screen and (min-width: 390px) {
     #menu, #instructions {
         height: 80%;
@@ -431,29 +431,40 @@ de tudo e nao poder clicar em nada embaixo!!! */
         width: 4.7rem;
     } */
 
+    #boardLevel1 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
     #boardLevel1 > .flipContainer {
-        width: 7rem;
-        height: 7rem;
+        width: 6.2rem;
+        height: 6.2rem;
     }
     
     #boardLevel2 > .flipContainer {
-        width: 6rem;
-        height: 6rem;
+        width: 4.4rem;
+        height: 4.4rem;
+    }
+
+    #boardLevel2 {
+        row-gap: 0.8rem;
+        column-gap: 0.8rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 
     #boardLevel4 > .flipContainer {
-        width: 4.7rem;
-        height: 4.7rem;
+        width: 4rem;
+        height: 4rem;
     }
 
     #boardLevel5 > .flipContainer {
-        width: 3.9rem;
-        height: 3.9rem;
+        width: 3.4rem;
+        height: 3.4rem;
     }
 
     #boardLevel6 > .flipContainer {
-        width: 3.8rem;
-        height: 3.8rem;
+        width: 3.5rem;
+        height: 3.5rem;
     }
 }
 
