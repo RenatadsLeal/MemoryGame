@@ -453,18 +453,18 @@ de tudo e nao poder clicar em nada embaixo!!! */
     }
 
     #boardLevel4 > .flipContainer {
-        width: 4rem;
-        height: 4rem;
+        width: 3.6rem;
+        height: 3.6rem;
     }
 
     #boardLevel5 > .flipContainer {
-        width: 3.4rem;
-        height: 3.4rem;
+        width: 2.9rem;
+        height: 2.9rem;
     }
 
     #boardLevel6 > .flipContainer {
-        width: 3.5rem;
-        height: 3.5rem;
+        width: 3.2rem;
+        height: 3.2rem;
     }
 }
 
