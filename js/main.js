@@ -68,24 +68,24 @@ let verifySoundPreference = (music) => {
     else { pauseMusic(music) }
 }
 
-function Level(number, numberOfCards, minutes, seconds, blocked) {
+function Level(number, numberOfCards, minutes, seconds, blocked, starsRequired) {
     this.number = number;
     this.numberOfCards = numberOfCards;
     this.minutes = minutes;
     this.seconds = seconds;
     this.blocked = blocked;
-    // this.starsRequired = starsRequired;
+    this.starsRequired = starsRequired;
     this.score = 0;
     this.starsWon = 0;
 };
 
 let levels = [
-    new Level(1, 6, 2, 0, false),
-    new Level(2, 10, 3, 0, false),
-    new Level(3, 14, 4, 0, false),
-    new Level(4, 18, 5, 0, false),
-    new Level(5, 22, 6, 0, false),
-    new Level(6, 25, 7, 0, false)
+    new Level(1, 6, 2, 0, false, 0),
+    new Level(2, 10, 3, 0, true, 2),
+    new Level(3, 14, 4, 0, true, 6),
+    new Level(4, 18, 5, 0, true, 11),
+    new Level(5, 22, 6, 0, true, 16),
+    new Level(6, 25, 7, 0, true, 21)
 ]
 
 let createBtnSound = (music) => {
@@ -191,6 +191,14 @@ let createLevels = (level, parent) => {
 
 let openMenu = () => {
     clearMain();
+    let savedStars = JSON.parse(localStorage.getItem("stars"));
+    if (savedStars) {
+        levels.forEach(level => {
+            if (savedStars.starsTotal >= level.starsRequired) {
+                level.blocked = false;
+            }
+        })
+    }
     createBtnSound(introMusic);
 
     let goBack = createDivId("goBack", header)
@@ -352,12 +360,6 @@ let youWin = (level) => {
     if (soundPreference) { gameOverSound.play() };
     // verifySoundPreference(gameOverSound);
 
-    const maxLevelIndex = levels.length - 1;
-
-    if (currentLevelIndex < maxLevelIndex) {
-        levels[currentLevelIndex + 1].blocked = false;
-    }
-
     let opaqueBackground = createDivId("opaqueBackground", main);
     let youWin = createDivId("youWin", opaqueBackground);
     let imgYouWin = document.createElement("img");
@@ -405,13 +407,15 @@ let youWin = (level) => {
 
 
     let btns = createDivId("btnsEndLevel", youWin)
-    let btnNextLevel = createButton("btnNextLevel", "Next level", btns);
+    if (level.number < 6 && !levels[currentLevelIndex + 1].blocked) {
+        let btnNextLevel = createButton("btnNextLevel", "Next level", btns);
+        btnNextLevel.addEventListener("click", () => {
+            openLevel(levels[currentLevelIndex + 1]);
+        });
+    }
     let btnPlayAgain = createButton("btnPlayAgain", "Play again", btns);
     let btnLevelsMenu = createButton("btnLevelsMenu", "Back to menu", btns);
-
-    btnNextLevel.addEventListener("click", () => {
-        openLevel(levels[currentLevelIndex + 1]);
-    });
+    
     btnLevelsMenu.addEventListener("click", () => openMenu());
 
     btnPlayAgain.addEventListener("click", () => {
@@ -430,15 +434,15 @@ let calculateScore = (level) => {
     const clickRate = clickCountScore / level.numberOfCards;
     let score = (((minutesLeft * 60) + secondsLeft) / clickRate).toFixed(3);
     level.score = score;
-    if (score <= 1.000) {
+    if (score <= 30.000) {
         level.starsWon = 1;
-    } else if (score <= 2.000) {
+    } else if (score <= 40.000) {
         level.starsWon = 2;
-    } else if (score <= 3.000) {
+    } else if (score <= 50.000) {
         level.starsWon = 3;
-    } else if (score <= 4.000) {
+    } else if (score <= 60.000) {
         level.starsWon = 4;
-    } else if (score > 4.000) {
+    } else if (score > 60.000) {
         level.starsWon = 5;
     }
 
@@ -461,8 +465,13 @@ let calculateScore = (level) => {
         starsWonLevel3: levels[2].starsWon,
         starsWonLevel4: levels[3].starsWon,
         starsWonLevel5: levels[4].starsWon,
-        starsWonLevel6: levels[5].starsWon
+        starsWonLevel6: levels[5].starsWon,
+        starsTotal: 0
     }
+
+    levels.forEach(level => {
+        stars.starsTotal += level.starsWon
+    })
 
     let savedScores = JSON.parse(localStorage.getItem("scores"));
 
@@ -473,6 +482,12 @@ let calculateScore = (level) => {
         localStorage.setItem("scores", JSON.stringify(scores));
         localStorage.setItem("stars", JSON.stringify(stars));
     }
+
+    levels.forEach(level => {
+        if (stars.starsTotal >= level.starsRequired) {
+            level.blocked = false;
+        }
+    })
 }
 
 let openLevel = (level) => {
@@ -595,11 +610,15 @@ document.addEventListener("DOMContentLoaded", openHome())
 // Voltar para Home - DONE
 // mutar/desligar o som do botão start - DONE
 // trocar o let para const
-// Criar uma imagem única do nosso logo para o Read me - Carol
+// Criar uma imagem única do nosso logo para o Read me - Carol - DONE
 // estrelas cinzas, estralas não ganhadas
 // máximo de esforço + uma folguinha = 5 estrelas
+// Remover Next Level do último level - DONE
+// Testar vh - CANCELLED
+// checar se o next level nao ta bloqueado para habilitar o botao next level - DONE
+// passar o codigo que desbloqueia os niveis dependendo das estrelas para uma funcao
 
-// git commit -m "adjusted level 6 cards, sound preference on start btn, fixed blocked level 6 bug
+// git commit -m "fixed btnNextLevel, adjusted logic to unblock levels and stars required
 
 
 // Co-authored-by: Helena Perdigueiro <helenaperdigueiro@users.noreply.github.com>
