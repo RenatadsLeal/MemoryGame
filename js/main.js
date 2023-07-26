@@ -215,6 +215,13 @@ let openMenu = () => {
     let btnInstructions = createButton("btnInstructions", "Instructions", menu);
     btnInstructions.addEventListener("click", () => openInstructions());
 
+    let btnClearLocalStorage = createButton("btnInstructions", "Clear Scores", menu);
+    btnClearLocalStorage.addEventListener("click", () => {
+        localStorage.removeItem("scores")
+        localStorage.removeItem("stars")
+        location.reload();
+    });
+
 }
 
 let openHome = () => {
@@ -618,7 +625,7 @@ document.addEventListener("DOMContentLoaded", openHome())
 // checar se o next level nao ta bloqueado para habilitar o botao next level - DONE
 // passar o codigo que desbloqueia os niveis dependendo das estrelas para uma funcao
 
-// git commit -m "fixed btnNextLevel, adjusted logic to unblock levels and stars required
+// git commit -m "added clear score btn
 
 
 // Co-authored-by: Helena Perdigueiro <helenaperdigueiro@users.noreply.github.com>
